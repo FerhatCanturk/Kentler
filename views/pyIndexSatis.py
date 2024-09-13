@@ -50,9 +50,7 @@ def SATISLAR012(ModelID, Point):
         
         if "ClientID" in session:
             UserID = session.get('ClientID').strip()
-            if ClientID>1:
-                
-        
+      
         return redirect("/IndexSatislar")
     except Exception as e:
           current_app.config['Mesaj'] = "pyIndexSatislar-199"
