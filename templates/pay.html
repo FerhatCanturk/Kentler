@@ -1,0 +1,156 @@
+{% extends 'Base.html' %}
+{% block Baslik %} Ödeme Sayfası {% endblock %}
+{% block ExtraStyles %}
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+        form {
+            max-width: 50%;
+            margin: 0 auto;
+            padding: 120px;
+            border: 5px solid black;
+            border-radius: 16px;
+            font-size: 32px;
+            background-color: var(--Mavi);
+                -webkit-box-shadow: 6px 6px 6px 0px rgba(0, 0, 0, 1);
+            -moz-box-shadow: 6px 6px 6px 0px rgba(0, 0, 0, 1);
+            box-shadow: 6px 6px 6px 0px rgba(0, 0, 0, 1);
+        }
+
+        .form-row {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        #card-element {
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: white;
+            height: 40px;
+            border-radius: 16px;
+            -webkit-box-shadow: 6px 6px 6px 0px rgba(0, 0, 0, 1);
+            -moz-box-shadow: 6px 6px 6px 0px rgba(0, 0, 0, 1);
+            box-shadow: 6px 6px 6px 0px rgba(0, 0, 0, 1);
+        }
+
+        #card-errors {
+            color: red;
+            margin-top: 10px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: red;
+        }
+    </style>
+{% endblock %}
+{% block SolUst %} {% endblock %}
+{% block AnaSayfaMenusuBlock %} {% endblock %}
+{% block UyeGirisMenusu %} {% endblock %}
+{% block AdminNavigasyon %} {% endblock %}
+{% block UserNavigasyon %} {% endblock %}
+{% block ExtraNavigasyon %}{% endblock %}
+{% block SolAlt %} {% endblock %}
+{% block SmallScreenRightHeader %} Küçük Ekrandan Selamlar {% endblock %}
+{% block Icerikler %}
+
+<h1 class="BeyazTextGolgesi" style="margin-bottom: 64px">Ödeme Yapın</h1>
+<form id="payment-form" style="padding: 64px;">
+
+    <!-- Kart sahibi adı -->
+    <div class="form-row">
+        <label for="card-name">Adınız Soyadınız</label>
+        <input class="SiyahResimGolgesi" type="text" id="card-name" style="height: 40px; width: 50%; background-color: white;" required>
+    </div>
+
+    <!-- Kart numarası -->
+    <div class="form-row">
+        <label for="card-element">Kart Numaranız</label>
+        <div id="card-element">
+            <!-- Stripe Elements burada kart numarası giriş alanını oluşturacak -->
+        </div>
+    </div>
+
+    <!-- Son kullanma tarihi ve CVV -->
+    <div class="form-row">
+        <label for="card-expiry"></label>
+        <div id="card-expiry">
+            <!-- Stripe Elements burada son kullanma tarihi giriş alanını oluşturacak -->
+        </div>
+    </div>
+
+    <div class="form-row">
+        <label for="card-cvc"></label>
+        <div id="card-cvc">
+            <!-- Stripe Elements burada CVV giriş alanını oluşturacak -->
+        </div>
+    </div>
+    <h2>Yapılacak Ödeme Tutarınız</h2>
+    <h2>{{SepetTotal[0]['SepetTutari']}}-TL</h2>
+    <!-- Hata mesajları için bir alan -->
+    <div id="card-errors" role="alert"></div>
+
+    <!-- Ödeme yap butonu -->
+    <button type="submit" style="width: 50%;">Ödeme Yap</button>
+</form>
+{% endblock %}
+{% block Script %}
+<script>
+        // Stripe.js ile Stripe nesnesini oluşturun
+        var stripe = Stripe('pk_test_Tw39b3x5f3fJvKdAwm0J9dpK'); // Test için yayınlama anahtarınızı buraya ekleyin
+        var elements = stripe.elements();
+        
+        // Kart bilgileri için Elements oluşturun
+        var card = elements.create('card');
+        
+        // Kart bilgilerini formdaki yerlerine monte edin
+        card.mount('#card-element');  // Kart numarası
+        card.mount('#card-expiry');  // Son kullanma tarihi
+        card.mount('#card-cvc');  // CVV
+        
+        // Form gönderildiğinde çalışacak olan işlem
+        var form = document.getElementById('payment-form');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            stripe.createToken(card).then(function(result) {
+                if (result.error) {
+                    // Hata durumunda
+                    var errorElement = document.getElementById('card-errors');
+                    errorElement.textContent = result.error.message;
+                } else {
+                    // Başarı durumunda token'ı sunucuya gönderin
+                    stripeTokenHandler(result.token);
+                }
+            });
+        });
+
+        // Token'ı sunucuya gönderme
+        function stripeTokenHandler(token) {
+            var form = document.getElementById('payment-form');
+            var hiddenInput = document.createElement('input');
+            hiddenInput.setAttribute('type', 'hidden');
+            hiddenInput.setAttribute('name', 'stripeToken');
+            hiddenInput.setAttribute('value', token.id);
+            form.appendChild(hiddenInput);
+
+            // Formu gönderin
+            form.submit();
+        }
+    </script>
+{% endblock %}

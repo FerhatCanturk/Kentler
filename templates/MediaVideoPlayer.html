@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="tr">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Video</title>
+        <style>
+        * {box-sizing: border-box;}
+        body {
+            margin: 0;
+            font-family: Arial;
+            font-size: 17px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            background-image: url("/static/images/AdminBeyazLogo.png");
+            background-position: fixed;
+            background-repeat: repeat;
+            background-size: 118px 87px;
+            background-color: black;
+        }
+        #myVideo {
+            position: relative;
+            min-width: 25vw;
+            max-height: 75%;
+            min-height: auto;
+            text-align: center;
+            border: 12px solid teal;
+            background-color: #000;
+        }
+        .watermark {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 1); /* Beyaz renk */
+            pointer-events: none; /* Tıklama olaylarını engeller */
+            user-select: none; /* Seçilebilirliği engeller */
+            z-index: 10; /* Diğer öğelerin üstünde görünmesini sağlar */
+        }
+        .logo {
+            position: absolute;
+            top: 35%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            pointer-events: none;
+            user-select: none;
+        }
+        #progress-container {
+            width: 600px;
+            height: 50px;
+            background: #ddd;
+            border: 5px solid #4caf50;
+            border-radius: 25px;
+            margin-top: 10px; /* Butonlardan boşluk */
+            position: relative;
+            z-index: 1; /* Butonların altında görünmesini sağlar */
+        }
+        #progress-bar {
+            height: 42px;
+            background: #4caf50;
+            border-right: 3px solid red;
+            width: 0%;
+        }
+        .button-container {
+            display: flex;
+            gap: 10px; /* Butonlar arasında boşluk */
+            margin-top: 10px; /* Progress bar'ın altında biraz boşluk bırakır */
+        }
+        .button-container button {
+            width: 10vw;
+            font-size: 18px;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            color: #fff;
+        }
+        .time-container {
+    color: white;
+    font-size: 16px;
+    margin-top: 10px; /* Progress bar'ın altında boşluk */
+    text-align: center;
+}
+        .button-container button#playBtn {background: darkgreen;}
+        .button-container button#playBtn:hover {background: darkblue;color: white;}
+        .button-container button#closeBtn {background: #ff0000;}
+        .button-container button#closeBtn:hover {background: blue;color: white;}
+    </style>
+    </head>
+    <body oncontextmenu="return false;"> <!-- Sağ tıklamayı devre dışı bırak -->
+        <video id="myVideo">
+            <source src="data:video/mp4;base64, {{ Video[0]['Base64Video'] }}" type="video/mp4">
+        </video>
+        <div class="watermark">
+            <h1 class="SiyahResimGolgesi" style="color:red; background-color: #000; width: 300px; border: 1px solid white; text-align: center;">
+                <strong>{{ VS }}</strong>
+            </h1>
+        </div>
+        <div class="logo">
+            <img src="/static/images/AdminSiyahLogo.png" style="background: transparent; width: 300px; height: 200px;" alt>
+        </div>
+        <div id="progress-container">
+            <div id="progress-bar"></div>
+        </div>
+        <div class="time-container">
+            <span id="current-time">0:00</span> / 
+            <span id="total-duration">0:00</span>
+        </div>
+        <div class="button-container">
+            <button id="playBtn">Oynat</button>
+            <button id="closeBtn" onclick="redirectToIndex()">Kapat</button>
+        </div>
+
+        <script>
+document.addEventListener('DOMContentLoaded', function() {
+    var video = document.getElementById("myVideo");
+    var playBtn = document.getElementById("playBtn");
+    var progressBar = document.getElementById("progress-bar");
+    var progressContainer = document.getElementById("progress-container");
+    var currentTimeSpan = document.getElementById("current-time");
+    var totalDurationSpan = document.getElementById("total-duration");
+
+    // Oynat/Durdur butonuna tıklama olayı
+    playBtn.addEventListener('click', function() {
+        if (video.paused) {
+            video.play().catch(function(error) {
+                console.error("Video playback failed:", error);
+            });
+            playBtn.textContent = "Durdur";
+        } else {
+            video.pause();
+            playBtn.textContent = "Oynat";
+        }
+    });
+
+    function formatTime(seconds) {
+        var minutes = Math.floor(seconds / 60);
+        var seconds = Math.floor(seconds % 60);
+        return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+    }
+
+    function updateProgress() {
+        var currentTime = video.currentTime;
+        var duration = video.duration;
+
+        var percent = (currentTime / duration) * 100;
+        progressBar.style.width = percent + '%';
+
+        // Mevcut süreyi güncelle
+        currentTimeSpan.textContent = formatTime(currentTime);
+    }
+
+    // Meta veriler yüklendiğinde toplam süreyi güncelle
+    video.addEventListener('loadedmetadata', function() {
+        totalDurationSpan.textContent = formatTime(video.duration);
+        updateProgress();
+    });
+
+    // Zaman güncellenmesi olayını dinleyin
+    video.addEventListener('timeupdate', updateProgress);
+
+    // Progress bar üzerinde tıklamayla video süresini güncelleme
+    progressContainer.addEventListener('click', function(event) {
+        var offsetX = event.offsetX;
+        var width = progressContainer.clientWidth;
+        var percent = offsetX / width;
+        video.currentTime = percent * video.duration;
+    });
+});
+</script>
+
+    </body>
+</html>

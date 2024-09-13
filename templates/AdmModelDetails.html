@@ -1,0 +1,211 @@
+{% extends 'Base.html' %}
+{% block Baslik %} {% endblock %}
+{% block ExtraStyles %}
+<style>
+    .gif-container {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .rotating-gif {
+        width: 100px;
+        /* GIF'in genişliğini ayarlayın */
+        height: 100px;
+        /* GIF'in yüksekliğini ayarlayın */
+        visibility: hidden;
+        /* Başlangıçta görünmez */
+        opacity: 0;
+        /* Başlangıçta tamamen şeffaf */
+        transition: visibility 0.5s, opacity 0.5s;
+        /* Geçiş efekti */
+    }
+
+    .rotating {
+        animation: spin 4s linear infinite;
+        visibility: visible;
+        /* Görünür hale getirme */
+        opacity: 1;
+        /* Tamamen opak hale getirme */
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+{% endblock %}
+{% block UserNavigasyon %} {% endblock %}
+{% block SolAltAciklama %} {% endblock %}
+{% block BizKimiz %} {% endblock %}
+{% block SmallTopIcerik %} {% endblock %}
+{% block Icerikler %}
+
+
+{% if ResimKabul == 1 and VideoKabul == 1 %}
+<div class="AnaBasliklar SiyahResimGolgesi Border" style="margin:0; padding: 0; margin-bottom: 16px;">{{ModelAck[0]["ModelAdi"]}} İÇERİKLERİ</div>
+
+<div class="row text-center" style="width: 100%; height: auto; padding: 0; margin:0; margin-bottom: 16px; padding: 16px; margin:0; background-color: transparent">
+    {% if ResimKabul == 1 %}
+    <div class="col-lg-4 d-flex themed-grid-col">
+        <form action="/ResimGonder" method="post" enctype="multipart/form-data">
+            <div class="FlexRow">
+                <input class="TextYuks" style="text-align: center; width: 25%; margin-right:16px;font-size: 200%;" placeholder="SıraNo" type="text" name="PictSira" value="{{Pmax}}" maxlength="2" required>
+                <input type="file" id="fileInput" name="file" style="width: 100%; background-color: var(--Mavi);padding: 15px;" required>
+            </div>
+            <input type="submit" id="toggleButton" value="Resmi Kaydedin" style="width: 100%; height: 75px; background-color: darkblue; color: white; margin-top:32px; border-radius: 16px;">
+
+            <div class="gif-container" id="gifcont" style="margin-top: 32px;">
+                <img src="/static/images/AdminBeyazLogo.png" style="width: 50%; height: auto; margin-top:12px" alt="Dönme Efekti" id="gif1" class="rotating-gif">
+            </div>
+        </form>
+    </div>
+
+
+    <div class="col-lg-4 d-flex themed-grid-col FlexColumn" STYLE="height: 100%; max-width: 100%;">
+        <img id="imagePreview" class="image-preview" style="max-width: 100%; height: 100%; width: 100%" alt="Seçimini Yaptığınız Resim">
+
+    </div>
+    {% endif %}
+    {% if VideoKabul == 1 %}
+    <div class="col-lg-4 d-flex themed-grid-col">
+        <form action="/VideoGonder" method="post" enctype="multipart/form-data">
+            <div class="FlexRow">
+                <input class="TextYuks" style="text-align: center; width: 25%; margin-right:16px; font-size: 200%;" placeholder="SıraNo" type="text" name="VideoSira" value="{{Vmax}}" maxlength="2" required>
+                <input type="file" style="width: 100%; background-color: var(--Mavi);padding: 15px;" name="file" required>
+
+            </div>
+            <input type="submit" value="Video Kaydedin" id="toggleButton2" style="width: 100%; height: 75px; background-color: darkmagenta; color: white; margin-top:32px; border-radius: 16px;">
+            <div class="gif-container" id="gifcont2" style="margin-top: 32px;">
+                <img src="/static/images/AdminBeyazLogo.png" style="width: 50%; height: auto;" alt="Dönme Efekti" id="gif2" class="rotating-gif">
+            </div>
+        </form>
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+<!-- ESKI İÇERİKLER ESKI İÇERİKLER ESKI İÇERİKLER ESKI İÇERİKLER ESKI İÇERİKLER ESKI İÇERİKLER ESKI İÇERİKLER ESKI İÇERİKLER -->
+<!-- ESKI İÇERİKLER ESKI İÇERİKLER ESKI İÇERİKLER ESKI İÇERİKLER ESKI İÇERİKLER ESKI İÇERİKLER ESKI İÇERİKLER ESKI İÇERİKLER -->
+<!-- ESKI İÇERİKLER ESKI İÇERİKLER ESKI İÇERİKLER ESKI İÇERİKLER ESKI İÇERİKLER ESKI İÇERİKLER ESKI İÇERİKLER ESKI İÇERİKLER -->
+<!-- ESKI İÇERİKLER ESKI İÇERİKLER ESKI İÇERİKLER ESKI İÇERİKLER ESKI İÇERİKLER ESKI İÇERİKLER ESKI İÇERİKLER ESKI İÇERİKLER -->
+<!-- ESKI İÇERİKLER ESKI İÇERİKLER ESKI İÇERİKLER ESKI İÇERİKLER ESKI İÇERİKLER ESKI İÇERİKLER ESKI İÇERİKLER ESKI İÇERİKLER -->
+<div class="AnaBasliklar Border SiyahResimGolgesi" style="margin-top:16px; color:black; margin-bottom:16px">KAYITLI RESİMLER</div>
+<div class="row text-center FlexRow" style="width: 100%; height: auto; padding: 16px; margin:0; gap:32px; background-color: transparent;">
+    {% for ModelPicture in ModelPictures %}
+    <div class="col-lg-2 SiyahResimGolgesi Border" style="margin-bottom:12px; padding: 16px; background-color: var(--Mavi);">
+        <div class="FlexColumn">
+            <img class="imgResim " src="data:image/jpeg;base64,{{ ModelPicture.Base64Pict }}" style="height: auto; width: 100%;" alt="Resim Önizlemesi">
+            <form action="ResimSil/{{ModelPicture.Sira}}" method="POST" style="width: 100%; margin-top:16px">
+                <button class="IndexSubmit" style="width: 100%; height: 30px;" type="submit">
+                    <div>Resim-{{ModelPicture.Sira}} Silme</div>
+                </button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<div class="AnaBasliklar Border SiyahResimGolgesi" style="margin-top:16px; color:black; margin-bottom:16px">KAYITLI VİDEOLAR</div>
+<div class="row text-center FlexRow" style="width: 100%; height: auto; padding: 16px; margin:0; gap:32px; background-color: transparent;">
+    {% for ModelVideo in ModelVideos %}
+    <div class="col-lg-2 SiyahResimGolgesi Border" style="margin-bottom:12px; padding: 16px; height: auto; background-color: var(--Mavi);">
+        <div class="FlexColumn">
+            <form id="VideoGoster/{{ModelVideo.Sira}}" action="/VideoGoster/{{ModelVideo.Sira}}" method="POST" style="height: 85px; height: auto;">
+                <a class="fa fa-video fa-5x" href="VideoGoster/{{ModelVideo.Sira}}" style="color:black" onclick="submitForm('{{ModelVideo.Sira}}', '{{ModelVideo.Sira}}');"></a>
+            </form>
+            <form id="VideoSil/{{ModelVideo.Sira}}" action="VideoSil/{{ModelVideo.Sira}}" method="POST" style="width: 100%; margin-top:16px">
+                <button class="IndexSubmit" form="VideoSil/{{ModelVideo.Sira}}" style="width: 100%; height: 30px;" type="submit" type="submit">
+                    <div>Video-{{ModelVideo.Sira}} Silme</div>
+                </button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+    {% endblock %}
+
+    {% block ExtraScript %}
+    <!-- Video Göstermeye Geçiş -->
+    <script>
+        function submitForm ( modelId, index )
+        {
+            var formId = 'VideoGoster/' + index;
+            var form = document.getElementById( formId );
+            if ( form ) 
+            {
+                form.submit();
+            }
+            else 
+            {
+                console.error( 'ID Numarası Bulunamadı' );
+            }
+        }
+        document.getElementById( 'fileInput' ).addEventListener( 'change', function ( event )
+        {
+            const file = event.target.files[ 0 ]; // Get the selected file
+            const imagePreview = document.getElementById( 'imagePreview' ); // Get the image element
+
+            if ( file )
+            {
+                const reader = new FileReader(); // Create a FileReader instance
+
+                reader.onload = function ( e )
+                {
+                    imagePreview.src = e.target.result; // Set the image source to the file data
+                }
+
+                reader.readAsDataURL( file ); // Read the file as a Data URL
+            } else
+            {
+                imagePreview.src = ''; // Clear the image preview if no file is selected
+            }
+        } );
+        // ########################################################################################################
+
+        const gif = document.getElementById( 'gif1' );
+        const button = document.getElementById( 'toggleButton' );
+        let isVisible = false;
+
+        button.addEventListener( 'click', () =>
+        {
+            if ( isVisible )
+            {
+                gif.classList.remove( 'rotating' );
+                gif.style.visibility = 'hidden';
+                gif.style.opacity = '0';
+            } else
+            {
+                gif.classList.add( 'rotating' );
+                gif.style.visibility = 'visible';
+                gif.style.opacity = '1';
+            }
+            isVisible = !isVisible;
+        } );
+        // ########################################################################################################
+
+        const gif2 = document.getElementById( 'gif2' );
+        const button2 = document.getElementById( 'toggleButton2' );
+        let isVisible2 = false;
+        button2.addEventListener( 'click', () =>
+        {
+            if ( isVisible )
+            {
+                gif2.classList.remove( 'rotating' );
+                gif2.style.visibility = 'hidden';
+                gif2.style.opacity = '0';
+            } else
+            {
+                gif2.classList.add( 'rotating' );
+                gif2.style.visibility = 'visible';
+                gif2.style.opacity = '1';
+            }
+            isVisible = !isVisible;
+        } );
+
+    </script>
+    {% endblock %}

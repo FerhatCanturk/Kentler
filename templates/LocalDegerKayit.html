@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="tr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ana Sayfa</title>
+        <script>
+            window.onload = function() 
+            {
+                // Python'dan gelen veriyi ve sayfa adını al
+                const KayitDegeri = "{{ Veri }}";
+                const GoToSayfa = "{{ Page }}";
+
+                // Veriyi localStorage'a kaydet
+                localStorage.setItem('Const', KayitDegeri);
+                // Yönlendirme işlemi
+                setTimeout(() => {window.location.href = GoToSayfa;}, 1); 
+            }
+        </script>
+    </head>
+    <body>
+        <!-- <h1 style="color: red">Veri Kayıtlarınız Yapılıyor Bekleyiniz....</h1> -->
+        <!-- <h2 style="color: blue">{{ Veri }}</h2> -->
+    </body>
+</html>

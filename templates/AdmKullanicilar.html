@@ -1,0 +1,238 @@
+{% extends 'Base.html' %}
+{% block Baslik %} Kullanıcılar {% endblock %}
+{% block ExtraStyles %}
+{% endblock %}
+{% block SolUst %} {% endblock %}
+{% block UyeGirisMenusuBlock %} {% endblock %}
+{% block UserNavigasyon %} {% endblock %}
+{% block ExtraNavigasyon %} {% endblock %}
+{% block SolAltAciklama %}
+<div class="FlexRow" style="gap: 4px; margin:0; padding: 0;">
+    <form action="AdmOncekiSayfa" , method="POST">
+        <button type="submit" class="DurumFiltreButonlari" {% if Onceki %} style="background-color: darkgray" {% else %} style="background-color: blue; color: white" {% endif %}>
+            ONCEKI SAYFA</button>
+    </form>
+
+    <form action="AdmUsersFitreReset" method="POST">
+        <button type="submit" class="DurumFiltreButonlari" {% if (FiltreID == "0" and FiltreAdSoyad == '' ) %} style="background-color: blue; color:white" {% else %} style="background-color: red; color: white" {% endif %}>
+            FILTRE BOSALT</button>
+    </form>
+    <form action="AdmSonrakiSayfa" , method="POST">
+        <button type="submit" class="DurumFiltreButonlari" {% if Sonraki %} style="background-color: darkgray" {% else %} style="background-color: blue; color: white" {% endif %}>
+            SONRAKI SAYFA</button>
+    </form>
+</div>
+<div class="FlexRow" style="gap:4px">
+    <form action="AdmUsersFiltre/11" method="POST">
+        <button type="submit" class="DurumFiltreButonlari" {% if FiltreID==11 %} style="background-color: red" {% else %} style="background-color: blue; color: white" {% endif %}>
+            ADMIN UYELER</button>
+
+    </form>
+    <form action="AdmUsersFiltre/21" , method="POST">
+        <button type="submit" class="DurumFiltreButonlari" {% if FiltreID==21 %} style="background-color: red" {% else %} style="background-color: blue; color: white" {% endif %}>
+            ÖDEME BEKLEMEDE
+        </button>
+    </form>
+    <form action="AdmUsersFiltre/31" , method="POST">
+        <button type="submit" class="DurumFiltreButonlari" {% if FiltreID==31 %} style="background-color: red" {% else %} style="background-color: blue; color: white" {% endif %}>
+            AKTİF ÜYELER
+        </button>
+    </form>
+</div>
+<div class="FlexRow" style="gap:4px">
+    <form action="AdmUsersFiltre/41" method="POST">
+        <button type="submit" class="DurumFiltreButonlari" {% if FiltreID == 41 %} style="background-color: red" {% else %} style="background-color: blue; color: white" {% endif %}>
+            PASIF UYELER</button>
+
+    </form>
+    <form action="AdmUsersFiltre/81" , method="POST">
+        <button type="submit" class="DurumFiltreButonlari" {% if FiltreID==81 %} style="background-color: red" {% else %} style="background-color: blue; color: white" {% endif %}>
+            RED EDILENLER
+        </button>
+    </form>
+    <form action="AdmUsersFiltre/91" , method="POST">
+        <button type="submit" class="DurumFiltreButonlari" {% if FiltreID==91 %} style="background-color: red" {% else %} style="background-color: blue; color: white" {% endif %}>
+            BLOKELI UYELER
+        </button>
+    </form>
+</div>
+{% if ToplamUserSys > 0 %}
+<div class="FlexRow" style="background-color: transparent; width: 100%; margin:0; gap:4px">
+    <div class="col-xl-12 col-sm-12 FlexColumn" style="margin:0; padding:0;">
+        <div class="TextBeyazGolge" style="margin-top: 8px; margin-bottom: 8px;">
+            {{ IlkSatirIndis + 1 }} - {{ SonSatirIndis }} / ( {{ ToplamUserSys }} )
+        </div>
+    </div>
+</div>
+{% endif %}
+<div class="FlexRow row" style="background-color: transparent; width: 100%; margin:0; gap:12px">
+
+    {% for UserB in UserBaslik %}
+    <div class="col-xl-1 col-sm3 FlexColumn" style="margin:0; padding:0; ">
+        <form action="/AdmUserNameFiltre/{{UserB.Baslik}}" method="POST">
+            <button type="submit" class="AdFiltreButonlari" {% if FiltreAdSoyad != UserB.Baslik %} style="background-color: darkgray" {% else %} style="background-color: red; color: white" {% endif %}>
+                <div style="font-size: 175%;">{{UserB.Baslik}}</div>
+                <div style="margin-top:-6px">{{UserB.Sys}}</div>
+            </button>
+        </form>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+{% block BizKimiz %}{% endblock %}
+{% block SmallScreenRightHeader %} Kullanıcılar Listesi {% endblock %}
+
+{% block Icerikler %}
+{% if UsersSayfa %}
+{% for User in UsersSayfa %}
+<!-- ##################################################################################################### -->
+<!-- ##################################################################################################### -->
+<!-- ##################################################################################################### -->
+<!-- ##################################################################################################### -->
+<!-- ##################################################################################################### -->
+<!-- ##################################################################################################### -->
+<!-- ##################################################################################################### -->
+<!-- ##################################################################################################### -->
+<!-- ##################################################################################################### -->
+<!-- ##################################################################################################### -->
+<div class="SiyahResimGolgesi Border" style="width: 100%; padding: 32px; margin-bottom:64px; background-color: var(--Mavi);">
+    <!-- SATIR-1 -->
+    <div class="row text-center" style="background-color: transparent; width: 100%; margin:0;">
+        <div class="col-lg-2 col-sm-12" style="letter-spacing: 2.5px; font-weight: bolder; ">Adı Soyadı</div>
+        <div class="col-lg-2 col-sm-12">{{ User["UserAdiSoyadi"].strip() }}</div>
+        <div class="col-lg-2 col-sm-12" style="letter-spacing: 2.5px; font-weight: bolder; ">GSM Numarası</div>
+        <div class="col-lg-2 col-sm-12">{{ User.UserGSMNumber.strip() }}</div>
+        <div class="col-lg-2 col-sm-12" style="letter-spacing: 2.5px; font-weight: bolder; ">eMail Adresi</div>
+        <div class="col-lg-2 col-sm-12">{{ User.UserMailAdress.strip() }}</div>
+    </div>
+    <!-- SATIR-2 -->
+    <div class="row text-center" style="background-color: transparent; width: 100%; margin:0; margin-bottom:32px">
+        <div class="col-lg-2 col-sm-12" style="letter-spacing: 2.5px; font-weight: bolder; ">Kullanıcı Adı</div>
+        <div class="col-lg-2 col-sm-12">{{ User.UserName.strip() }}</div>
+        <div class="col-lg-2 col-sm-12" style="letter-spacing: 2.5px; font-weight: bolder; ">PassWord</div>
+        <div class="col-lg-2 col-sm-12">{{ User.SifresizPass.strip() }}</div>
+        <div class="col-lg-2 col-sm-12" style="letter-spacing: 2.5px; font-weight: bolder; ">Verify Code</div>
+        <div class="col-lg-2 col-sm-12">{{ User.VerifyMailCode.strip() }}</div>
+    </div>
+    <!-- SATIR-3 -->
+    <div class="row text-center" style="background-color: transparent; width: 100%; margin:0;">
+        <div class="col-lg-2 col-sm-12" style="letter-spacing: 2.5px; font-weight: bolder; ">Üyelik Talep Tarihi</div>
+        <div class="col-lg-2 col-sm-12">{{ User.UyelikTalepTarihi.strftime('%d-%m-%Y') }}</div>
+        <div class="col-lg-2 col-sm-12" style="letter-spacing: 2.5px; font-weight: bolder; ">Üyelik Onay Tarihi</div>
+        <div class="col-lg-2 col-sm-12"> {% if User.BaslamaTarihi == None or User.BaslamaTarihi == '' %} ----- {% else %} {{ User.BaslamaTarihi.strftime('%d-%m-%Y') }} {% endif %}</div>
+        <div class="col-lg-2 col-sm-12" style="letter-spacing: 2.5px; font-weight: bolder; ">Paket Adı</div>
+        <div class="col-lg-2 col-sm-12">{{ User.PaketAdi.strip() }}</div>
+    </div>
+    <!-- SATIR-4 -->
+    <div class="row text-center" style="background-color: transparent; width: 100%; margin:0; margin-bottom:32px">
+        <div class="col-lg-2 col-sm-12" style="letter-spacing: 2.5px; font-weight: bolder; ">Blokaj Tarihi</div>
+        <div class="col-lg-2 col-sm-12">{% if User.BlockTarihi == None or User.BlockTarihi == '' or User.DurumID == 91 %} ----- {% else %} {{ User.BlockTarihi.strftime('%d-%m-%Y') }} {% endif %}</div>
+        <div class="col-lg-2 col-sm-12" style="letter-spacing: 2.5px; font-weight: bolder; ">Ayrılma Tarihi</div>
+        <div class="col-lg-2 col-sm-12">{% if User.SonlanmaTarihi == None or User.BaslamaTarihi == '' %} ----- {% else %} {{ User.SonlanmaTarihi.strftime('%d-%m-%Y') }} {% endif %}</div>
+        <div class="col-lg-2 col-sm-12" style="letter-spacing: 2.5px; font-weight: bolder; ">Cihaz Durumu</div>
+        <div class="col-lg-2 col-sm-12">{% if User.SqlCihazKodu == None or User.SqlCihazKodu == 'Tanımsız'  %} Açık {% else %} Rezerve Edildi {% endif %}</div>
+    </div>
+    <!-- SATIR-5 -->
+    <div class="row text-center" style="background-color: transparent; width: 100%; margin:0;">
+        <div class="col-lg-2 col-sm-12" style="letter-spacing: 2.5px; font-weight: bolder; ">Atölyesi</div>
+        <div class="col-lg-2 col-sm-12">{{User.AtolyeAck.strip() }}</div>
+        <div class="col-lg-2 col-sm-12" style="letter-spacing: 2.5px; font-weight: bolder; ">Açık Model Sayısı</div>
+        <div class="col-lg-2 col-sm-12"> {{ User.ModelCount }}-Adet</div>
+        <div class="col-lg-2 col-sm-12" style="letter-spacing: 2.5px; font-weight: bolder; ">Single Sayısı</div>
+        <div class="col-lg-2 col-sm-12">{{ User.AcikSingle }}-Adet</div>
+    </div>
+    <!-- SATIR-6 -->
+    <div class="row text-center" style="background-color: transparent; width: 100%; margin:0;">
+        <div class="col-lg-2 col-sm-12" style="letter-spacing: 2.5px; font-weight: bolder; ">Oylama Sayısı</div>
+        <div class="col-lg-2 col-sm-12">{{ User.PuanSys }}-Adet</div>
+        <div class="col-lg-2 col-sm-12" style="letter-spacing: 2.5px; font-weight: bolder; ">Ortalama Oylaması</div>
+        <div class="col-lg-2 col-sm-12">{{ User.PuanOrt }} / 5</div>
+        <div class="col-lg-2 col-sm-12" style="letter-spacing: 2.5px; font-weight: bolder; ">Ziyaret Sayısı</div>
+        <div class="col-lg-2 col-sm-12">0-Adet</div>
+    </div>
+
+    <div class="row text-center Border SiyahResimGolgesi" style="background-color: rgb(255, 220, 225); width: 100%; margin:0; margin-top:32px; border-radius: 16px; padding: 16px;">
+        <div class="col-xl-2 col-sm6 FlexColumn">
+            {% if User.DurumID == 11 %}<img style="max-width: 150px; min-width: 150px; " src="/static/images/IconUserAdmin.svg">{% endif %}
+            {% if User.DurumID == 21 %}<img style="max-width: 150px; min-width: 150px; " src="/static/images/IconUserCash.svg">{% endif %}
+            {% if User.DurumID == 31 %}<img style="max-width: 150px; min-width: 150px; " src="/static/images/IconUserActive.svg">{% endif %}
+            {% if User.DurumID == 41 %}<img style="max-width: 150px; min-width: 150px; " src="/static/images/IconUserPasif.svg">{% endif %} {% if User.DurumID == 81 %}<img style="height: 100%; min-height: 100%; max-width: 100%; " src="/static/images/IconUserPasif.svg">{% endif %}
+            {% if User.DurumID == 91 %}<img style src="/static/images/IconUserBlock.svg">{% endif %}
+            <p style="font-family: 'Playwrite NZ'; color:black"><strong>{{ User.DRM }}</strong></p>
+        </div>
+        <!-- ######################################################################### -->
+        {% if User.Aktifle == 1 %}
+        <div class="col-xl-2 col-sm6 FlexColumn">
+            <form action="AdmUyeAktifle/{{ User.UserID }}" method="POST" style="width: 100%; margin-top: 4px;">
+                <input type="date" class="DateYuks" style="width: 100%; padding-left:6px;" id="Acilis" name="Acilis" min="{{ User.BaslamaTarihi }}" max="2222-12-31" value="{{ User.BaslamaTarihi }}" required>
+                <select id="PaketID" name="PaketID" style="width: 100%; margin-top:4px" class="DateYuks">
+                    {% for Paket in Paketler %}
+                    <option value="{{Paket.PaketID}}">{{Paket.PaketAdi}}</option>
+                    {% endfor %}
+                </select>
+                <button class="DateYuks" style="width: 100%; min-height: 65px; height: auto; background-color: darkgreen; margin-top:4px; color:white" type="submit">
+                    <div>Aboneyi</div>
+                    <div>Kullanıma Aç</div>
+                </button>
+            </form>
+        </div>
+        {% endif %}
+        <!-- ######################################################################### -->
+        {% if User.Pasifle == 1 %}
+        <div class="col-xl-2 col-sm6 FlexColumn">
+            <form action="AdmUyePasifle/{{ User.UserID }}" method="POST" style="width: 100%; margin-top: 4px;">
+                <input type="date" class="DateYuks" style="width: 100%;  padding-left: 6px;" id="Kapanis" name="Kapanis" min="{{ User.BaslamaTarihi }}" max="2222-12-31" value="{{ User.BaslamaTarihi }}" required>
+                <button class="DateYuks" style="width: 100%; min-height: 65px; height: auto; background-color: rgb(255, 127, 0); color:white; margin-top:4px;" type="submit">
+                    <div>Aboneye</div>
+                    <div>Kullanıma Kapat</div>
+                </button>
+            </form>
+        </div>
+        {% endif %}
+        <!-- ######################################################################### -->
+        {% if User.UyeDetay == 99 %}
+        <div class="col-xl-2 col-sm6 FlexColumn">
+            <form action="AdmUyeDetay/{{ User.UserID }}" method="POST" style="width: 100%; margin-top: 4px;">
+                <button class="ButonYuks" style="width: 100%; min-height: 65px; height: auto; background-color: darkblue; color:white" type="submit">
+                    Abone Zaman Çizelgesi
+                </button>
+            </form>
+        </div>
+        {% endif %}
+        <!-- ######################################################################### -->
+        {% if User.ModelAc == 1 %}
+        <div class="col-xl-2 col-sm6 FlexColumn">
+            <form action="AdmModelAc/{{ User.UserID }}" method="POST" style="width: 100%; margin-top: 4px;">
+                <button class="ButonYuks" style="width: 100%; min-height: 65px; height: auto; background-color: rgb(29, 157, 242); color:black;" type="submit">
+                    <div>Aboneye</div>
+                    <div>Model Aç / Kapat</div>
+                </button>
+            </form>
+        </div>
+        {% endif %}
+        <!-- ######################################################################### -->
+        {% if User.CihazReset == 1 %}
+        <div class="col-xl-2 col-sm6 FlexColumn">
+            <form action="AdmUyeCihazReset/{{ User.UserID }}" method="POST" style="width: 100%; margin-top: 4px;">
+                <button class="ButonYuks" style="width: 100%; min-height: 65px; height: auto; background-color: darkorchid; color:white" type="submit">
+                    Abone Cihazını Resetleme
+                </button>
+            </form>
+        </div>
+        {% endif %}
+        <!-- ######################################################################### -->
+        {% if User.Red == 1 %}
+        <div class="col-xl-2 col-sm6 FlexColumn">
+            <form action="AdmUyeRed/{{ User.UserID }}" method="POST" style="width: 100%;margin-top: 4px; ">
+                <button class="ButonYuks" style="width: 100%; min-height: 65px; height: auto; background-color:darkred; color:white;" type="submit">
+                    ÜyeRed
+                </button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+{% endblock %}
+{% block Script %} {% endblock %}

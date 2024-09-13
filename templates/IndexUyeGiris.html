@@ -1,0 +1,34 @@
+{% extends 'Base.html' %}
+{% block ExtraStyles %}
+<style>
+    .Stil {
+        font-size: 16px;
+        height: 50px;
+        padding-left: 16px;
+        background-color: white;
+        width: 100%;
+        margin-bottom: 16px;
+    }
+</style>
+{% endblock %}
+{% block AdminNavigasyon %} {% endblock %}
+{% block UserNavigasyon %} {% endblock %}
+{% block SolAltAciklama %} {% endblock %}
+{% block SmallTopIcerik %} {% endblock %}
+
+{% block Icerikler %}
+<div class="FlexColumn" style="height: auto; margin-top:50px; ">
+    <form action="/BtnUyeGirisSonKontrollerHTML" method="POST" class="SiyahResimGolgesi Border" style="width: 60%; background-color: var(--Mavi); padding: 32px; border-radius: 32px;">
+        <h1 style="color:black;"><strong>Üye Girişi</strong></h1><br>
+        <input type="email" name="MailAdres" class="Stil TextYuks" placeholder="Mail Adresiniz..." required maxlength="50">
+        <input type="text" name="UserName" class="Stil TextYuks" style="font-size:16px; height: 50px; padding-left: 16px; background-color: white; width: 100%;margin-bottom: 16px;" placeholder="Kullanıcı Adınız..." required maxlength="10">
+        <input type="password" id="numericPassword" name="PassWord" class="Stil TextYuks" placeholder="Şifreniz..." required maxlength="6" oninput="validateNumeric(this)">
+        <input type="number" name="OnayKodu" class="Stil TextYuks" placeholder="Onay Kodunuz..." required maxlength="6">
+        <button class="IndexSubmit">Siteye Giriş Yapın</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block ExtraScript %}
+<script> function validateNumeric ( input ) { input.value = input.value.replace( /[^0-9]/g, '' ); } </script>
+{% endblock %}

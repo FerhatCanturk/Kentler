@@ -1,0 +1,132 @@
+{% extends 'Base.html' %}
+{% block Baslik %} Üye Olun {% endblock %}
+
+{% block ExtraStyles %}
+<style>
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
+
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: red;
+        border-radius: 75%;
+        -webkit-transition: .4s;
+        transition: .5s;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        border-radius: 50%;
+        -webkit-transition: .4s;
+        border: 2px solid black;
+        transition: .5s;
+    }
+
+    input:checked+.slider {
+        background-color: green;
+    }
+
+    input:focus+.slider {
+        box-shadow: 0 0 1px green;
+    }
+
+    input:checked+.slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    .slider.round {
+        border-radius: 34px;
+    }
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+</style>
+{% endblock %}
+
+
+
+{% block AdminNavigasyon %} {% endblock %}
+{% block UserNavigasyon %} {% endblock %}
+{% block SolAltAciklama %} {% endblock %}
+{% block SmallTopIcerik %} YENİ ÜYELİK TALEBİ {% endblock %}
+{% block Icerikler %}
+<div class="row text-center SiyahResimGolgesi Border" style="background-color: var(--Mavi); width: 100%; padding: 0; margin:0;  margin-top: 32px; margin-bottom: 32px;">
+
+    <div class="col-lg-6 col-sm-12 d-flex themed-grid-col" style="padding: 16px;">
+        <div class="FlexColumn" style="height: 100%; width: 100%; ">
+            <div class="Aciklama" style="margin-top: auto">
+                <div class="image-holder" style="width: 100%; padding: 16px; ">
+                    <img class="SiyahResimGolgesi" src="/static/images/YeniUye.webp" width="80%">
+                    <ul style="padding-top: 32px;">Formu tarafımıza gönderdikten sonra üyelik bedelini hesabımıza havale etmeniz beklenecektir.</ul>
+                    <ul style="padding-top: 8px;">Üyelik veya Proje Bedelini yatırabileceğiniz Banka Hesabımız:</ul>
+                    <ul style="padding-top: 8px;">{{ SiteOwner["BankaSube"] }}</ul>
+                    <ul style="padding-top: 8px;">{{ SiteOwner["IBANNo"] }}</ul>
+                    <ul style="padding-top: 8px;">Anılan bedeli yatırdıktan sonra tarafımızla paylaşmanızın akabinde Mail Adresinize siteye giriş için kullanacağınız ONAY KODU'nu paylaşacağız.</ul>
+                    <ul style="padding-top: 8px;">30 Gün içerisinde ödemeniz alınamaması durumunda girişini yaptığınız kişisel bilgileriniz sistemimizden silinecektir.</ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-sm-12 d-flex themed-grid-col" style="padding: 16px;">
+        <div class="FlexColumn" style="height: 100%; width: 100%;">
+            <div class="Aciklama" style="margin-top: auto">
+                <div class="image-holder" style="width: 100%; padding: 16px; margin: 0;">
+                    <form action="/BtnUyelikKaydiTalepAnaliz.html" method="POST">
+                        <h3>Üyelik Talep Formu</h3>
+                        <input type="text" name="Ad" placeholder="Adınız" class="form-control" required maxlength="25" style="margin-bottom:12px">
+                        <input type="text" name="Soyad" placeholder="Soyadınız" class="form-control" value required maxlength="25" style="margin-bottom:12px">
+                        <input type="text" name="GsmNo" placeholder="GSM Numaranız" class="form-control" required maxlength="15" style="margin-bottom:12px">
+                        <input type="text" name="UserName" placeholder="UserName" class="form-control" value required maxlength="10" style="margin-bottom:12px">
+                        <input type="text" name="MailAdres" placeholder="Mail Adresiniz" class="form-control" value required maxlength="100" style="margin-bottom:12px">
+                        <select name="PaketID" class="form-control" style="background-color: rgb(255, 200, 255); border-radius: 16px; height: 45px; border:1px solid black; margin-bottom:12px">
+                            <option value disabled selected>Abonelik Paketleri</option>
+                            {% for AP in APaket %}
+                            <option value="{{AP.PaketID}}">{{ AP.PaketAdi }}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="password" name="Sifre1" placeholder="Şifreniz" class="form-control" value required maxlength="6" style="margin-bottom:12px">
+                        <input type="password" name="Sifre2" placeholder="Şifreniz (Tekrar)" class="form-control" value required maxlength="6" style="margin-bottom:12px">
+
+                        <div class="form-group" style="display: flex; flex-direction: row; align-items: right; justify-content: right; text-align: right; gap: 10px;">
+                            <div class="col"><label class="switch" style="text-align: right;"> <input type="checkbox" name="check"> <span class="slider"></span></label></div>
+                            <div class="col" style="text-align: left;"><a href="/IndexKKGoster">
+                                    <h6>Üyelik Sözleşmesini Okudum ve Kabul Ediyorum</h6>
+                                </a>
+                                <h6>Seçim Yapmak Zorunludur.</h6>
+                                <h6>Aksi Halde Talebiniz Kabul Edilmeyecektir.</h6>
+                            </div>
+                        </div>
+                        <input type="submit" class="IndexSubmit" value="Talebinizi Gönderiniz" style="margin-top:12px; height: 100px; width: auto; font-size:26px">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block ExtraScript %} {% endblock %}

@@ -1,0 +1,95 @@
+{% extends 'Base.html' %}
+{% block Baslik %}Ana Sayfa{% endblock %}
+{% block ExtraStyles %}
+<style>
+    .SagaYasla {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 100px;
+        height: 100px;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid black;
+        background-color: hotpink;
+        border-radius: 50%;
+        margin-right: 10px;
+        padding: 10px;
+        z-index: 1000;
+    }
+
+    .SagaYasla form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .SagaYasla button {
+        border: none;
+        cursor: pointer;
+        background-color: transparent;
+
+    }
+</style>
+{% endblock %}
+{% block AdminNavigasyon %} {% endblock %}
+{% block UserNavigasyon %} {% endblock %}
+{% block SolAltAciklama %} {% endblock %}
+{% block SmallTopIcerik %} {% endblock %}
+{% block Icerikler %}
+<!-- ######################################################################################################################################################################## -->
+{% if Sepet[0].SepetSys %}
+<div class="SagaYasla SiyahResimGolgesi" style="margin-top: 32px;">
+    <form action="/SepetGoruntule">
+        <button>
+            <i class="fa fa-shopping-basket fa-2x w3-center" style="color: black;"></i>
+            <div style="color: black">{{ Sepet[0].SepetSys }}-Adet</div>
+            <div style="color: black;">{{ Sepet[0].SepetTutari }}-TL</div>
+        </button>
+    </form>
+</div>
+{% endif %}
+<!-- ######################################################################################################################################################################## -->
+<div class="AnaBasliklar SiyahResimGolgesi" STYLE="margin: 0; padding: 0;">Ürünlerimiz</div>
+<div class="row text-center FlexRow" style="background-color: transparent; width: 100%; padding: 0; margin:0;  margin-top: 32px; margin-bottom: 32px;">
+    {% for Group in Groups %}
+    <div class="col-lg-2 d-flex themed-grid-col" style="height: 400px; padding: 16px; ">
+        <form class="FlexColumn  SiyahResimGolgesi" style="background-color:white; padding: 16px; height: auto;" action="/Shopping/{{Group.GrubID}}" method="POST">
+            <input type="image" {% if Group.Base64Pict %} src="data:image/jpeg;base64,{{ Group.Base64Pict }}" {% else %} src="/static/images/Grub{{Group.GrubID}}.jpg" {% endif %} style="width: 100%; height: auto; box-shadow: 12px 12px 12px black; max-height: 300px;" class="rounded-circle">
+            <h3 style="margin-top:32px; font-size: 100%; color:red"><strong>{{Group.GrubAdi}}</strong></h3>
+            <h6>{{Group.ModelSys}}-Adet Ürün</h6>
+            <h6>Değerlemeler: {{ Group.ModelOrt }} / 5</h6>
+        </form>
+    </div>
+    {% endfor %}
+</div>
+<!-- ######################################################################################################################################################################## -->
+{% if Shoppings %}
+<div class="AnaBasliklar SiyahResimGolgesi">{{Shoppings[0]["GrubAdi"]}}</div>
+<div class="row text-center d-flex FlexRow" style="width: 100%; padding: 0; margin:0; margin-top: 32px; margin-bottom: 32px; gap:32px;">
+    {% for Shop in Shoppings %}
+    <div class="col-xl-3 FlexRow d-flex themed-grid-col" style="padding: 16px; width: 300px">
+        <div class="FlexColumn SiyahResimGolgesi" style="background-color: white;">
+            <img style="width: 100%; height: auto; max-height: 400px;" src="data:image/jpeg;base64,{{ Shop.Base64Pict }}">
+            <div style="margin-top:32px" class="FlexRow">
+                {% for i in range(1, 6) %}
+                <form id="rating-form-{{Shop.ModelID}}" data-model-id="{{Shop.ModelID}}" action="/ModelPuanla/{{Shop.ModelID}}/{{i}}" method="POST" style="position: relative;">
+                    <button style="border: none; background-color: transparent; padding: 0%; margin: 0%;" class="star fa fa-star {% if Shop.OrtPuani >= i %} text-warning {% else %} text-muted {% endif %}" data-value="{{i}}" onclick="submitRating({{Shop.ModelID}}, {{i}})"></button>
+                </form>
+                {% endfor %}
+                <span style="margin-left: 12px;">{{Shop.OrtPuani}} / 5</span>
+            </div>
+            <form action="/SepeteGonder/{{Shop.ModelID}}" method="POST" style="margin-top: 8px;">
+                <div>{{Shop.ModelAdi}}</div>
+                <div>Satış Fiyatımız</div>
+                <div>{{Shop.Fiyati}}-TL</div>
+                <button style="font-size: 18px; color: red; background-color: transparent; border: none; cursor: pointer; margin-top: 8px;">
+                    <i class="fa fa-shopping-basket w3-center" style="margin-bottom:16px">Sepete At</i>
+                </button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}
+{% block ExtraScript %} {% endblock %}

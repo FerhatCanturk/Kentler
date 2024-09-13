@@ -1,0 +1,46 @@
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    # Örneğin, dinamik olarak hedef id'yi belirleyelim
+    target_id = 'contact'  # Bu değeri dinamik olarak değiştirebilirsiniz
+    return render_template('index.html', target_id=target_id)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page with Auto-Scroll</title>
+    <script>
+        // Sayfa yüklendiğinde çalışacak bir JavaScript fonksiyonu
+        window.onload = function() {
+            // Flask'tan gelen target_id'yi almak
+            var targetId = '{{ target_id }}';
+            var element = document.getElementById(targetId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        };
+    </script>
+</head>
+<body>
+    <h1>Welcome to My Page</h1>
+    <p>Some content here...</p>
+    <div id="contact" style="margin-top: 1000px;">
+        <h2>Contact Section</h2>
+        <p>This is the contact section.</p>
+    </div>
+    <p>More content...</p>
+</body>
+</html>

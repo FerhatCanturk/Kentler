@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Bloke Edildiniz</title>
+        <style>
+          body {
+               margin: 0;
+               font-family: Arial, sans-serif;
+               display: flex;
+               flex-direction: column;
+               align-items: center;
+               justify-content: center;
+               height: 100vh;
+               background-color: #e06c6c;
+               color: #000000;
+          }
+
+          .container {
+               display: grid;
+               width: 75vw;
+               grid-template-columns: 1fr;
+               gap: 16px;
+               max-width: 600px;
+               padding: 8px;
+               background-color: #fff;
+               box-shadow: 5px 5px 5px rgba(0, 0, 0, .75);
+               border-radius: 16px;
+               text-align: center;
+          }
+
+          .container img {
+               width: 100%;
+               height: auto;
+          }
+
+          .container p {
+               margin: 0;
+               padding: 0;
+               color: rgb(111, 0, 0);
+               grid-column: span 2;
+          }
+
+          @media (min-width: 768px) {
+               .container {
+                    grid-template-columns: 1fr 1fr;
+               }
+
+               .container img {
+                    grid-column: span 2;
+               }
+          }
+     </style>
+        <title>Document</title>
+    </head>
+
+    <body>
+        <div class="container">
+            <img src="/static/images/MsgBlock.png" alt="Blocked">
+            <p>Üyelik aşamasında kabul ettiğiniz Site Kullanım Kurallarını ihlal ettiğiniz anlaşılmıştır.</p>
+            <p>
+                Aynı sözleşmenin devam eden maddelerinde de belirtildiği üzere site kullanım kurallarını ihlal eden
+                abonelerimizin Web Sayfamız'a erişimlerinin kapatılacağı ve bu konuda da herhangi bir hak veya
+                alacaktalebinde bulunmayacağınızı belirtmiş bulunmamızın akabinde bu kurallarımızı kabul etmiştiniz.
+            </p>
+            <p>Bu kuralları ihlal ettiğinizden dolayı </p>
+            <p>ABONELİĞİNİZ KAPATILARAK, WEB SAYFAMIZ'a </p>
+            <p>erişiminiz süresiz olarak engellenmiştir.</p>
+        </div>
+    </body>
+</html>

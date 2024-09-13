@@ -1,0 +1,196 @@
+{% extends 'Base.html' %}
+{% block Baslik %} {% endblock %}
+{% block ExtraStyles %} {% endblock %}
+
+{% block UserNavigasyon %} {% endblock %}
+{% block SolAltAciklama %} {% endblock %}
+{% block BizKimiz %} {% endblock %}
+{% block SmallTopIcerik %} {% endblock %}
+{% block Icerikler %}
+<div class="AnaBasliklar SiyahResimGolgesi Border">Web Sitesi Sabitleri</div>
+<form class="row text-center Border SiyahResimGolgesi FlexRow" action="/WebSiteSabitKayıt1" id="f1" method="POST" style="width: 100%; height: auto; margin:0; margin-top: 32px; margin-bottom: 64px; padding: 16px; background-color: var(--Mavi);" enctype="multipart/form-data">
+    <div class="col-xl-4 col-lg-12 FlexRow" style="margin-bottom:12px;">
+        <div style="width: 40%; font-weight: bolder;">Adınız Soyadınız</div>
+        <input class="TextYuks" style="width: 60%; padding: 16px;" name="WS01" value="{{WebSabitler[0]['Sutun01'].strip()}}" maxlength="50" required>
+    </div>
+    <div class="col-xl-4 col-lg-12 FlexRow" style="margin-bottom:12px;">
+        <div style="width: 40%; font-weight: bolder;">Unvanınız</div>
+        <input class="TextYuks" style="width: 60%; padding: 16px;" name="WS02" value="{{WebSabitler[0]['Sutun02'].strip()}}" maxlength="50" required>
+    </div>
+    <div class="col-xl-4 col-lg-12 FlexRow" style="margin-bottom:12px;">
+        <div style="width: 40%; font-weight: bolder;">Sloganınız</div>
+        <input class="TextYuks" style="width: 60%; padding: 16px;" name="WS03" value="{{WebSabitler[0]['Sutun03'].strip()}}" maxlength="50" required>
+    </div>
+
+    <div class="col-xl-4 col-lg-12 FlexRow" style="margin-bottom:12px;">
+        <div style="width: 40%; font-weight: bolder;">Mail Adresiniz</div>
+        <input class="TextYuks" style="width: 60%; padding: 16px;" name="WS08" value="{{WebSabitler[0]['Sutun08'].strip()}}" maxlength="50" required>
+    </div>
+    <div class="col-xl-4 col-lg-12 FlexRow" style="margin-bottom:12px;">
+        <div style="width: 40%; font-weight: bolder;">Telefon</div>
+        <input class="TextYuks" style="width: 60%; padding: 16px;" name="WS10" value="{{WebSabitler[0]['Sutun10'].strip()}}" maxlength="50" required>
+    </div>
+    <div class="col-xl-4 col-lg-12 FlexRow" style="margin-bottom:12px;">
+        <div style="width: 40%; font-weight: bolder;">Adresiniz</div>
+        <input class="TextYuks" style="width: 60%; padding: 16px;" name="WS09" value="{{WebSabitler[0]['Sutun09'].strip()}}" maxlength="50" required>
+    </div>
+    <div class="col-xl-4 col-lg-12 FlexRow" style="margin-bottom:12px;">
+        <div style="width: 40%; font-weight: bolder;">Mail Şifreniz</div>
+        <input class="TextYuks" style="width: 60%; padding: 16px;" name="WS14" value="{{WebSabitler[0]['Sutun14'].strip()}}" maxlength="50" required>
+    </div>
+    <div class="col-xl-4 col-lg-12 FlexRow" style="margin-bottom:12px;">
+        <div style="width: 40%; font-weight: bolder;">HostName</div>
+        <input class="TextYuks" style="width: 60%; padding: 16px;" name="WS15" value="{{WebSabitler[0]['Sutun15'].strip()}}" maxlength="50" required>
+    </div>
+    <div class="col-xl-4 col-lg-12 FlexRow" style="margin-bottom:12px;">
+        <div style="width: 40%; font-weight: bolder;">SMTP.Port</div>
+        <input class="TextYuks" style="width: 60%; padding: 16px;" name="WS16" value="{{WebSabitler[0]['Sutun16'].strip()}}" maxlength="50" required>
+    </div>
+
+    <div class="col-xl-6 col-lg-12 FlexRow" style="margin-bottom:12px;">
+        <div style="width: 35%; font-weight: bolder;">Bankanız</div>
+        <input class="TextYuks" style="width: 100%; padding: 16px;" name="WS11" value="{{WebSabitler[0]['Sutun11'].strip()}}" maxlength="50" required>
+    </div>
+    <div class="col-xl-6 col-lg-12 FlexRow" style="margin-bottom:12px;">
+        <div style="width: 35%; font-weight: bolder;">IBAN.No</div>
+        <input class="TextYuks" style="width: 100%; padding: 16px;" name="WS12" value="{{WebSabitler[0]['Sutun12'].strip()}}" maxlength="50" required>
+    </div>
+
+    <div class="col-xl-12 col-lg-12 FlexColumn" style="margin-bottom:12px; width: 100%;">
+        <div style=" width: 100%; font-weight: bolder; letter-spacing: 4px;">Açıklama-1</div>
+        <input class="TextYuks" style="width: 100%; padding: 16px;" name="WS04" value="{{WebSabitler[0]['Sutun04'].strip()}}" maxlength="500" required>
+    </div>
+    <div class="col-xl-12 col-lg-12 FlexColumn" style="margin-bottom:12px; width: 100%;">
+        <div style=" width: 100%; font-weight: bolder; letter-spacing: 4px;">Açıklama-2</div>
+        <input class="TextYuks" style="width: 100%; padding: 16px;" name="WS05" value="{{WebSabitler[0]['Sutun05'].strip()}}" maxlength="500" required>
+    </div>
+    <div class="col-xl-12 col-lg-12 FlexColumn" style="margin-bottom:12px; width: 100%;">
+        <div style=" width: 100%; font-weight: bolder; letter-spacing: 4px;">Açıklama-3</div>
+        <input class="TextYuks" style="width: 100%; padding: 16px;" name="WS06" value="{{WebSabitler[0]['Sutun06'].strip()}}" maxlength="500" required>
+    </div>
+    <div class="col-xl-12 col-lg-12 FlexColumn" style="margin-bottom:12px; width: 100%;">
+        <div style=" width: 100%; font-weight: bolder; letter-spacing: 4px;">Açıklama-4</div>
+        <input class="TextYuks" style="width: 100%; padding: 16px;" name="WS07" value="{{WebSabitler[0]['Sutun07'].strip()}}" maxlength="500" required>
+    </div>
+    <div class="col-xl-12 col-lg-12 FlexColumn" style="margin-bottom:12px;">
+        <div style=" width: 100%; font-weight: bolder; letter-spacing: 4px;">Arka Plan Resminiz</div>
+        <input type="file" class="TextYuks" name="file" id="fileInput" style="width: 100%; padding: 16px;">
+        <span id="fileContent" style="width: 50%; height: auto; padding: 16px;">
+            <img class="SiyahResimGolgesi" src="/static/images/BackGround.jpg" style="width: 100%; height: auto;" alt="">
+        </span>
+    </div>
+    <input class="IndexSubmit SiyahResimGolgesi" type="submit" form="f1" style="width: 50%; margin-bottom: 32px;" value="Web Sabitlerinizi Kayıt Edin">
+</form>
+<!-- #################################################################################################################################### -->
+<div class="AnaBasliklar SiyahResimGolgesi Border">Abonelik Paketleri</div>
+<form class="row text-center Border SiyahResimGolgesi FlexRow" action="/WebSiteSabitKayıt2" id="f2" method="POST" style="width: 100%; height: auto; margin:0; margin-top: 32px; margin-bottom: 64px; padding: 16px; background-color: var(--Mavi);" enctype="multipart/form-data">
+    {% for P in Pockets %}
+    <div class="col-xl-4 col-lg-12 FlexColumn" style="margin-bottom:12px;">
+        <input class="TextYuks" style="width: 100%; padding: 16px; margin-bottom:12px; text-align: center;" name="PK1_{{P.PaketID}}" value="{{P.Kisa.strip()}}" maxlength="5" required>
+        <input class="TextYuks" style="width: 100%; padding: 16px; margin-bottom:12px; text-align: center;" name="PK2_{{P.PaketID}}" value="{{P.PaketAdi.strip()}}" maxlength="10" required>
+        <input class="TextYuks" style="width: 100%; padding: 16px; margin-bottom:12px; text-align: center;" name="PK3_{{P.PaketID}}" value="{{P.Sutun1.strip()}}" maxlength="50" required>
+        <input class="TextYuks" style="width: 100%; padding: 16px; margin-bottom:12px; text-align: center;" name="PK4_{{P.PaketID}}" value="{{P.Sutun2.strip()}}" maxlength="50" required>
+        <input class="TextYuks" style="width: 100%; padding: 16px; margin-bottom:12px; text-align: center;" name="PK5_{{P.PaketID}}" value="{{P.Sutun3.strip()}}" maxlength="50" required>
+        <input class="TextYuks" style="width: 100%; padding: 16px; margin-bottom:12px; text-align: center;" name="PK6_{{P.PaketID}}" value="{{P.Sutun4.strip()}}" maxlength="50" required>
+        <input class="TextYuks" style="width: 100%; padding: 16px; margin-bottom:12px; text-align: center;" name="PK7_{{P.PaketID}}" value="{{P.SutunFiyat.strip()}}" maxlength="50" required>
+        <textarea class="TextYuks" style="width: 100%; padding: 16px; margin-bottom:12px;                 " name="PK8_{{P.PaketID}}" maxlength="2000" rows="5" required>{{P.Kurallar.strip()}}</textarea>
+    </div>
+    {% endfor %}
+    <input class="IndexSubmit SiyahResimGolgesi" type="submit" form="f2" value="Abonelik Paketlerini Kayıt Edin" style="width: 50%; margin-bottom: 32px;">
+</form>
+<!-- #################################################################################################################################### -->
+<div class="AnaBasliklar SiyahResimGolgesi Border">Ürün & Model Grubları</div>
+{% for Group in Groups %}
+<form class="row text-center Border SiyahResimGolgesi FlexRow" action="/WebGrubDegistir/{{Group.GrubID}}" id="WGD{{Group.GrubID}}" method="POST" style="background-color: var(--Mavi); padding: 32px;margin-top:32px; margin-bottom: 32px;" enctype="multipart/form-data">
+    <div class="col-xl-3 col-lg-12 FlexColumn" style="margin-bottom:12px;">
+        <input class="TextYuks" style="width: 100%; padding-left: 16px;" name="GrubAdi{{Group.GrubID}}" value="{{Group.GrubAdi.strip()}}" required maxlength="50">
+        <h5 style="margin-top: 4px;">Grubdaki Ürün Sayınız</h5>
+        <h5 style="margin-top: 4px;">{{Group.ModelSys}}-Adet</h5>
+    </div>
+    <div class="col-xl-3 col-lg-12 FlexColumn" style="margin-bottom:12px; text-align: start;">
+        <input type="file" name="EskiFile{{Group.GrubID}}" id="fileInput{{Group.GrubID}}" style="width: 100%;" accept=".jpg">
+    </div>
+    <div class="col-xl-3 col-lg-12 FlexColumn" style="margin-bottom:12px;">
+        <img src="/static/images/Grub{{Group.GrubID}}.jpg" alt="Kayıtlı Resminiz" class="Border" style="width: 50%; height: auto;">
+    </div>
+    
+    <div class="col-xl-3 col-lg-12 FlexColumn" style="margin-bottom:12px;">
+        <input type="submit" value="Değiştir" style="width: 75%; height: 50px; color:white; background-color: darkblue; font-size:12px; margin-bottom: 16px;">
+        {% if Group.ModelSys == 0 %}
+        <input type="submit" form="WGS{{Group.GrubID}}" value="Silme" style="width: 75%; height: 50px; color:white; background-color: darkred; font-size:12px;">
+        {% endif %}
+    </div>
+    
+</form>
+<form action="/WebGrubSilme/{{Group.GrubID}}" id="WGS{{Group.GrubID}}" method="POST" style="display: inline;"></form>
+{% endfor %}
+<!-- #################################################################################################################################### -->
+<form class="row text-center Border SiyahResimGolgesi FlexRow" action="/WebYeniGrubKayit" id="WebYeniGrubKayit" method="POST" enctype="multipart/form-data" style="background-color: var(--Mavi); padding: 32px;margin-top:32px; margin-bottom: 32px; margin-bottom: 25vh;">
+    <div class="col-xl-3 col-lg-12 FlexColumn" style="margin-bottom:12px;">
+        <input class="TextYuks" style="width: 100%; padding-left: 16px;" form="WebYeniGrubKayit" name="YeniGrubAdi" value maxlength="50" required>
+    </div>
+    <div class="col-xl-3 col-lg-12 FlexColumn" style="margin-bottom:12px; text-align: start;">
+        <input type="file" name="fileYeni" id="fileInputYeni" form="WebYeniGrubKayit" style="width: 100%;" accept=".jpg">
+
+    </div>
+    <div class="col-xl-3 col-lg-12 FlexColumn" style="margin-bottom:12px;">
+        <span id="fileContentYeni" style="border: 2px solid black; width: 50%; height: auto;"></span>
+    </div>
+    <div class="col-xl-3 col-lg-12 FlexColumn" style="margin-bottom:12px;">
+        <input type="submit" form="WebYeniGrubKayit" value="Yeni Kaydet" style="width: 75%; height: 50px; color:white; background-color: darkgreen; font-size:12px; margin-bottom: 16px;">
+    </div>
+</form>
+<!-- #################################################################################################################################### -->
+{% endblock %}
+{% block ExtraScript %}
+<!-- Seçilen Resmi Gösterme -->
+<script>
+    document.getElementById( 'fileInput' ).addEventListener( 'change', function ( event )
+    {
+        const file = event.target.files[ 0 ];
+        const reader = new FileReader();
+
+        reader.onload = function ( e )
+        {
+            const img = new Image();
+            img.src = e.target.result;
+            img.style.maxWidth = '50%';
+            img.style.maxHeight = '100%';
+            img.style.borderRadius = '32px';
+
+
+            const span = document.getElementById( 'fileContent' );
+            span.innerHTML = ''; // Clear existing content
+            span.appendChild( img ); // Add the image to the span
+        };
+
+        if ( file )
+        {
+            reader.readAsDataURL( file );
+        }
+    } );
+    document.getElementById( 'fileInputYeni' ).addEventListener( 'change', function ( event )
+    {
+        const file = event.target.files[ 0 ];
+        const reader = new FileReader();
+
+        reader.onload = function ( e )
+        {
+            const img = new Image();
+            img.src = e.target.result;
+            img.style.maxWidth = '100%';
+            img.style.maxHeight = '100%';
+
+
+            const span = document.getElementById( 'fileContentYeni' );
+            span.innerHTML = ''; // Clear existing content
+            span.appendChild( img ); // Add the image to the span
+        };
+
+        if ( file )
+        {
+            reader.readAsDataURL( file );
+        }
+    } );
+</script>
+{% endblock %}

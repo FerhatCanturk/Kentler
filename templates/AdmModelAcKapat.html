@@ -1,0 +1,110 @@
+{% extends 'Base.html' %}
+{% block Baslik %} {% endblock %}
+{% block ExtraStyles %} {% endblock %}
+{% block UserNavigasyon %} {% endblock %}
+{% block SolAltAciklama %}
+<div style="color:black; font-size: 14px;">
+    ( {{ User[0]["UserAdiSoyadi"] }} )
+    <br>
+    Açık Model Sayısı: {{User[0]["AcikSingle"]}} + {{User[0]["ModelCount"]}} / {{ ToplamModelSys }}
+    <br>
+    Memnuniyet Oranı: {{User[0]["PuanOrt"]}} / 5 ({{User[0]["PuanSys"]}})
+</div>
+{% endblock %}
+{% block BizKimiz %} {% endblock %}
+{% block SmallTopIcerik %} {% endblock %}
+{% block Icerikler %}
+<div class="AnaBasliklar SiyahResimGolgesi Border" style="display:block; height: auto; padding: 16px; margin-bottom: 32px;">
+    <p>Üyemizin Adı Soyadı</p>
+    <p>{{ User[0]["UserAdiSoyadi"] }}</p>
+</div>
+
+
+{% for Model in Models %}
+<div class="row text-center SiyahResimGolgesi Border" style="background-color: transparent; width: 100%; padding: 2px; margin:0;  margin-top: 32px; margin-bottom: 32px; background-color: var(--Mavi);">
+    <div class="col-xl-3 col-sm-6 col-lg-3 FlexColumn" style="padding: 16px;">
+        <div style="width: 50%; height: auto;">
+            <img style="width: 100%; height: auto; max-width: 100%;" src="data:image/jpeg;base64,{{ Model['Base64Pict'] }}" alt>
+        </div>
+    </div>
+    <div class="col-xl-3 col-sm-6 col-lg-3 FlexColumn" style="padding: 16px;">
+        <div style="height: auto; width: 100%;">
+            {% if Model.AcikKapali == "KAPALI" %}
+            <form action="/ModelGoster/{{Model.ModelID}}" method="POST">
+                <div class="LS-YAZI" style="color:red; font-weight: bolder;">Üyeye Kapalı Durumdaki Model</div>
+                <button type="submit" style="width: 100%; height: auto; background: none; border: none; padding: 0;">
+                    <img style="width: 50%; height: auto; background: none; border: none; padding: 0;" src="/static/images/IconUserPasif.svg" alt="Goster">
+                </button>
+                <div class="LS-YAZI" style="color:red; font-weight: bolder;">Modeli Üyeye Açın</div>
+            </form>
+            {% elif Model.AcikKapali == "SINGLE" %}
+            <form action="/ModelGizle/{{Model.ModelID}}" method="POST">
+                <div class="LS-YAZI" style="color:black; font-weight: bolder;">Single Proje Satın Alındı</div>
+                <button type="submit" style="width: 100%; height: auto; background: none; border: none; padding: 0;">
+                    <img style="width: 50%; height: auto; background: none; border: none; padding: 0;" src="/static/images/IconUserCash.svg" alt="Goster">
+                </button>
+                <div class="LS-YAZI" style="color:black; font-weight: bolder;">Modeli Geri Çekin</div>
+            </form>
+            {% elif Model.AcikKapali == "BLOKE" %}
+            <div class="LS-YAZI" style="color:black; font-weight: bolder;">Blokeli Üye HiçBir Şey Göremez</div>
+            <button type="submit" style="width: 100%; height: auto; background: none; border: none; padding: 0;">
+                <img style="width: 50%; height: auto; background: none; border: none; padding: 0;" src="/static/images/IconUserBlock.svg" alt="Goster">
+            </button>
+            <div class="LS-YAZI" style="color:black; font-weight: bolder;">Blokeli Abone</div>
+            {% elif Model.AcikKapali == "ADMIN" %}
+            <div class="LS-YAZI" style="color:black; font-weight: bolder;">Admin Üyesi Sınırlamasız Her Şeyi Görür</div>
+            <button type="submit" style="width: 100%; height: auto; background: none; border: none; padding: 0;">
+                <img style="width: 50%; height: auto; background: none; border: none; padding: 0;" src="/static/images/IconUserAdmin.svg" alt="Goster">
+            </button>
+            <div class="LS-YAZI" style="color:black; font-weight: bolder;">Admin Üye</div>
+            {% elif Model.AcikKapali == "ABONE" %}
+            <div>
+                <div class="LS-YAZI" style="color:darkblue; font-weight: bolder;">Abonelik Tarihleri Aralığında</div>
+                <img style="width: 50%; height: auto;" src="/static/images/IconUserActive.svg" alt="Goster">
+                <div class="LS-YAZI" style="color:darkblue; font-weight: bolder;">Buradan Kapatılamaz</div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-xl-3 col-sm-6 col-lg-3 d-flex themed-grid-col" style="padding: 16px;">
+        <div class="FlexColumn" style="height: auto; width: 100%;">
+            <div>Model Adı</div>
+            <div>Model Cinsi</div>
+            <div>Yayın Tarihi</div>
+            <div>Proje Bedeli</div>
+            <div>Puan Sys</div>
+            <div>Puan Ort</div>
+            <div>Üynin Puanı</div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-sm-6 col-lg-3 d-flex themed-grid-col" style="padding: 16px;">
+        <div class="FlexColumn" style="height: auto; width: 100%;">
+            <div>{{Model.ModelAdi}}</div>
+            <div>{{Model.ModelCins}}</div>
+            <div>{{Model.YayinTarihi.strftime("%d-%m-%Y")}}</div>
+            <div>{{Model.Fiyati}}-TL</div>
+            <div>{{Model.VerilenPuanSayisi}}-Adet</div>
+            <div>{{Model.OrtPuan}} / 5</div>
+            <div>{{Model.VerilenPuan}}</div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+<!-- ####################################################################################################################### -->
+<div class="w3-center">
+    <form action="/ModelAcmaOnceki" method="POST" style="display: inline-block;">
+        <button style="width: 300px; height: 100px; margin-top: 4px;" type="submit" class="btn-sm {% if IlkSatir==1 %} btn btn-secondary disabled {% else %} btn btn-success {% endif %}">
+            Önceki Sayfa
+        </button>
+    </form>
+
+    <form action="/ModelAcmaSonraki" method="POST" style="display: inline-block;">
+        <button style="width: 300px; height: 100px; margin-top: 4px;" type="submit" class="btn-sm {% if SonSatir>=ToplamModelSys %} btn btn-secondary disabled {% else %} btn btn-success {% endif %}">
+            Sonraki Sayfa
+        </button>
+    </form>
+    <h1 style="padding-bottom: 64px; padding-top: 64px;">
+        <div class="BeyazTextGolgesi">({{IlkSatir}} - {{SonSatir}}) / {{ToplamModelSys}}</div>
+    </h1>
+</div>
+{% endblock %}

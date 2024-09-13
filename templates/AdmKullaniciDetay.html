@@ -1,0 +1,41 @@
+{% extends 'Base.html' %}
+{% block Baslik %} Kullanıcı Detayları {% endblock %}
+{% block ExtraStyles %}{% endblock %}
+{% block SolUst %} {% endblock %}
+{% block UyeGirisMenusuBlock %} {% endblock %}
+{% block UserNavigasyon %} {% endblock %}
+{% block ExtraNavigasyon %}{% endblock %}
+{% block SolAlt %} {% endblock %}
+{% block SmallScreenRightHeader %}
+{% endblock %}
+{% block Icerikler %}
+<div class="AnaBasliklar SiyahResimGolgesi" style="display:block;; height: auto; padding: 16px; margin-bottom: 32px;">
+    <p>Üyemizin Adı Soyadı</p><p>{{ User[0]["UserAdiSoyadi"] }}</p></div>
+<div class="LS-GRID" style="grid-template-columns: repeat(6, 1fr); height: auto; transform: none;">
+    {% for ATD in AboneTarihDetails %}
+    <div class="LS-GRID-INNER" style="height: auto; transform: none; border-radius: 16px; border:5px solid black; gap:0px; padding: 0px;
+                                       padding-top: 6px; padding-bottom: 6px; 
+                                       {% if ATD.Durum == 11 %} background-color: yellow; color: black; 
+                                       {% elif ATD.Durum == 12 %} background-color: darkgreen; color: white; 
+                                       {% elif ATD.Durum == 13 %} background-color: darkblue; color: white;
+                                       {% elif ATD.Durum == 14 %} background-color: pink; color: black;
+                                       {% else %} background-color: darkred; color:white;
+                                       {% endif %};">
+
+        <div class="LS-YAZI">{{ ATD.Tarih }}</div>
+        {% if ATD.Durum != 0 %}
+        <div class="LS-YAZI">
+            {{ATD.PaketKisa}}
+        </div>
+        {% else %}
+        <div class="LS-YAZI">
+            KAPALI
+        </div>
+        {% endif %}
+
+    </div>
+    {% endfor %}
+
+</div>
+<div class="AnaBasliklar" style="margin-top:32px; margin-bottom: 32px;">AÇIK MODELLER LİSTESİ</div>
+{% endblock %}

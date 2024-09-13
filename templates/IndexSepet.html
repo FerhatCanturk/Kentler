@@ -1,0 +1,72 @@
+{% extends 'Base.html' %}
+{% block Baslik %}Ana Sayfa{% endblock %}
+{% block ExtraStyles %}
+<style>
+     .form-container { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin:0}
+     .DurumFiltreButonlari {width: 80px; border-radius: 16px; height: 50px;}
+     .form-item {margin: 0; display: flex; justify-content: center;}
+     .ButonAdm{height: 50px; margin-top: 4px; background-color: darkblue; color:white; border-radius: 16px;}
+</style>
+
+{% endblock %}
+{% block SolUst %} {% endblock %}
+{% block AnaSayfaMenusuBlock %} {% endblock %}
+{% block UyeGirisMenusu %} {% endblock %}
+{% block AdminNavigasyon %} {% endblock %}
+{% block UserNavigasyon %} {% endblock %}
+{% block ExtraNavigasyon %}{% endblock %}
+{% block SolAlt %} {% endblock %}
+{% block SmallScreenRightHeader %} Küçük Ekrandan Selamlar {% endblock %}
+{% block Icerikler %}
+<h1 class="BeyazTextGolgesi">Sipariş Kodunuz: {{Siparis}}</h1>
+<div class="LS-GRID SiyahResimGolgesi" STYLE="gap: 0px; ">
+    {% for SepetRow in SepetRows %}
+    <div class="LS-GRID-INNER" STYLE="display: flex; flex-direction: column;border-radius: 0; align-items: center; width: 100%; background-color: var(--Mavi); padding: 16px; border: 2px solid black; ">
+        {{SepetRow.ModelAdi}}
+    </div>
+    <div class="LS-GRID-INNER" STYLE="display: flex; flex-direction: column;border-radius: 0; align-items: center; width: 100%; background-color: var(--Mavi); padding: 16px; border: 2px solid black; ">
+        {{SepetRow.Fiyati}}-TL x {{SepetRow.Miktar}}-Adet
+    </div>
+    <div class="LS-GRID-INNER" STYLE="display: flex; flex-direction: column;border-radius: 0; align-items: center; width: 100%; background-color: var(--Mavi); padding: 16px; border: 2px solid black; ">
+        <h3>{{SepetRow.Tutari}}-TL </h3>(KDV Dahil)
+    </div>
+    <div STYLE="display: flex; flex-direction: column; align-items: center; width: 100%; background-color: var(--Mavi); padding: 16px; border: 2px solid black; ">
+        <form action="SepetSatirSil/{{SepetRow.ModelID}}" method="POST" style="width: 100%;">
+            <button class="ButonAdm LS-YAZI" style="width: 75%;" type="submit">
+                Listeden Çıkart
+            </button>
+        </form>
+
+    </div>
+    {% endfor %}
+    <div class="LS-GRID-INNER" STYLE="display: flex; flex-direction: column;border-radius: 0; align-items: center; width: 100%; background-color: var(--Mavi); padding: 16px; border: 2px solid black; ">
+        GENEL TOPLAM
+    </div>
+    <div class="LS-GRID-INNER" STYLE="display: flex; flex-direction: column;border-radius: 0; align-items: center; width: 100%; background-color: var(--Mavi); padding: 16px; border: 2px solid black; ">
+
+    </div>
+    <div class="LS-GRID-INNER" STYLE="display: flex; flex-direction: column;border-radius: 0; align-items: center; width: 100%; background-color: var(--Mavi); padding: 16px; border: 2px solid black; ">
+        <h3>{{SepetTotal[0]['SepetTutari']}}-TL</h3>(KDV Dahil)
+    </div>
+
+    <div STYLE="display: flex; flex-direction: column; align-items: center; width: 100%; background-color: var(--Mavi); padding: 16px; border: 2px solid black; ">
+        {% if SepetRows %}
+        <form action="/SepetBosalt" style="width: 100%;">
+            <button class="ButonAdm LS-YAZI" style="width: 75%; height: 50px;" type="submit">
+                Tamamını Boşalt
+            </button>
+        </form>
+        {% else %}
+        <h1>Sepetiniz</h1>
+        <h1>Boşaltıldı</h1>
+        {% endif %}
+    </div>
+
+</div>
+<form action="/SendPay" method="post" style="width: 100%;">
+    <button class="ButonAdm LS-YAZI" style="width: 50%; height: 100px;" type="submit">
+        Ödeme Sayfası
+    </button>
+</form>
+{% endblock %}
+{% block Script %} {% endblock %}

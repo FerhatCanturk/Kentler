@@ -1,0 +1,36 @@
+{% extends 'Base.html' %}
+{% block Baslik %} Site Kullanım Kurallarımız {% endblock %}
+{% block ExtraStyles %}
+<style>
+          .KKIcerik {}
+     </style>
+{% endblock %}
+
+
+{% block AdminNavigasyon %}{% endblock %}
+{% block UserNavigasyon %}{% endblock %}
+
+{% block SolAltAciklama %}
+<p class="w3-center" style="margin:0; font-size: 16px; padding-right:16px; color:red">
+    <strong>
+        Her ne Şart Altında Olursa Olsun Kullanıcılarımızın abonelikleri tek bir cihaz için satışa sunulmaktadır.
+        İkinci bir kişiyle şifrelerin paylaşılarak başka bir cihazla giriş yapılması kesinlikle yasaktır.
+    </strong>
+</p>
+{% endblock %}
+{% block SmallTopIcerik %}
+<div style="font-size: 36px; color:yellow"> SİTE KULLANIM KURALLARI</div>
+{% endblock %}
+
+{% block Icerikler %}
+<div class="AnaBasliklar SiyahResimGolgesi Border" STYLE="height: auto;">
+    SİTE KULLANIM KURALLARIMIZ
+</div>
+{% for AP in APaket %}
+<div class="SiyahResimGolgesi Border" style="margin-top: 32px;margin-bottom: 32px;padding: 32px;background-color:var(--Mavi);">
+    <h1 style="color:black;">{{AP.PaketAdi}}</h1>
+    <div style="color:black"> {{ AP.Kurallar }}</div>
+</div>
+
+{% endfor %}
+{% endblock %}

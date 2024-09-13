@@ -1,0 +1,169 @@
+{% extends 'Base.html' %}
+{% block Baslik %} {% endblock %}
+{% block ExtraStyles %} {% endblock %}
+{% block UserNavigasyon %} {% endblock %}
+{% block SolAltAciklama %}
+<div style="width: 100%; margin: auto; padding: 0; margin-top:16px;">
+    <!-- Form başlangıcı -->
+    <form action="/ModelGrubFiltre" method="POST" style="width: 90%;">
+        <!-- Gizli input alanı -->
+        <input type="hidden" id="GrubIDInput" name="GrubIDInput">
+
+        <!-- Seçim kutusu -->
+        <select id="GrubID" name="GrubID" class="TextYuks" style="height: 55px; width: 100%; padding-left: 16px; background-color: hotpink;" onchange="updateHiddenInput()">
+            <option value="0">Filtreleme Seçilmedi</option>
+            {% for FGroup in FGroups %}
+            <option value="{{FGroup.GrubID}}" {% if GrubFiltreID == FGroup.GrubID %} selected {% endif %}>{{FGroup.GrubAdi}}</option>
+            {% endfor %}
+        </select>
+        <!-- Gönderim butonu -->
+        <button type="submit" class="IndexSubmit" style="width: 100%; height: 55px; margin-top: 16px;">Seçime Göre Filtrele</button>
+    </form>
+</div>
+<div style="width: 100%; margin: auto; padding: 0; text-align: left; align-items: left; margin-top:16px">
+    <!-- Form başlangıcı -->
+    <form action="/ModelSiralamaFiltre" method="POST" style="width: 90%; ">
+        <input type="hidden" id="GrubIDInput" name="GrubIDInput" value>
+        <select id="SiralamaID" name="SiralamaID" class="TextYuks" style="width: 100%; height: 55px; padding-left: 16px; background-color: hotpink;" onchange="updateHiddenInput()">
+            <option value="0" {% if SiralamaFiltreID == 0 %} selected {% endif %}>Filteleme Seçilmedi</option>
+            <option value="1" {% if SiralamaFiltreID == 1 %} selected {% endif %}>Model Adına Göre (Artan)</option>
+            <option value="2" {% if SiralamaFiltreID == 2 %} selected {% endif %}>Model Adına Göre (Azalan)</option>
+            <option value="3" {% if SiralamaFiltreID == 3 %} selected {% endif %}>Yayın Tarihi (Artan)</option>
+            <option value="4" {% if SiralamaFiltreID == 4 %} selected {% endif %}>Yayın Tarihi (Azalan)</option>
+            <option value="5" {% if SiralamaFiltreID == 5 %} selected {% endif %}>Fiyata Göre (Artan)</option>
+            <option value="6" {% if SiralamaFiltreID == 6 %} selected {% endif %}>Fiyata Göre (Azalan)</option>
+        </select>
+        <button type="submit" class="IndexSubmit" style="width: 100%; height: 55px; margin-top: 16px;">Seçime Göre Sırala</button>
+    </form>
+</div>
+{% endblock %}
+{% block BizKimiz %} {% endblock %}
+{% block SmallTopIcerik %} {% endblock %}
+
+{% block Icerikler %}
+<div class="AnaBasliklar SiyahResimGolgesi Border" style="margin-top:32px; margin-bottom: 32px;">MODEL/ÜRÜN YÖNETİMİ</div>
+<form class="For2mStyle" id="modelForm1" action="/YeniModelKaydet" method="POST" style="width: 100%;">
+    <div class="row text-center Border SiyahResimGolgesi" style="width: 100%; height: auto; padding: 64px; margin:0;  margin-top: 32px; background-color: var(--Mavi);">
+        <div class="col-lg-4 d-flex themed-grid-col" style="margin-bottom:12px">
+            <input class="DateYuks" style="width: 100%; padding-left: 16px;" type="date" name="ModelTarih1" min="{{ MinTarih }}" max="{{ MaxTarih }}" value="{{Bugun}}" value required>
+        </div>
+        <div class="col-lg-4 d-flex themed-grid-col" style="margin-bottom:12px">
+            <select class="TextYuks" id="ModelCins" name="ModelCins1" style="padding-left: 16px; width: 100%;">
+                <option value="MODEL">ÖRGÜ MODELİ (Aylık Periyot)</option>
+                <option value="EXTRA">ÖRGÜ MODELİ (Extra Modeller)</option>
+                <option value="ONLINE">ONLINE SATIS URUNLERI</option>
+            </select>
+        </div>
+        <div class="col-lg-4 d-flex themed-grid-col" style="margin-bottom:12px">
+            <select class="TextYuks" id="GrubID1" name="GrubID1" style="padding-left: 16px; width: 100%;">
+                {% for Group in Groups %}
+                <option value="{{Group.GrubID}}">
+                    {{Group.GrubAdi}}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-lg-8 d-flex themed-grid-col" style="margin-bottom:12px">
+            <input class="TextYuks" style="padding-left: 16px; width: 100%;" placeholder="Modelin Adı" type="text2" id="ModelAdi1" name="ModelAdi1" style required maxlength="50">
+        </div>
+        <div class="col-lg-2 d-flex themed-grid-col" style="margin-bottom:12px">
+            <input class="TextYuks" placeholder="Fiyatı" type="text" id="ModelFiyati1" name="ModelFiyati1" style="padding-left: 16px; width: 100%;" required maxlength="5">
+        </div>
+        <div class="col-lg-2 d-flex themed-grid-col" style="margin-bottom:12px">
+            <input type="submit" class="IndexSubmit TextYuks" type="submit" style="padding: 0;" form="modelForm1" value="Kaydedin">
+        </div>
+    </div>
+</form>
+
+<!-- ESKI MODELLERIMIZ -->
+<!-- ESKI MODELLERIMIZ -->
+<!-- ESKI MODELLERIMIZ -->
+<!-- ESKI MODELLERIMIZ -->
+<!-- ESKI MODELLERIMIZ -->
+
+<div class="AnaBasliklar  SiyahResimGolgesi Border" style="margin-top:32px; margin-bottom: 32px;">KAYITLI ÜRÜNLERİMİZ</div>
+{% for Model in Models %}
+<div class="row text-center Border SiyahResimGolgesi" style="width: 100%; height: auto; padding: 64px; margin:0; margin-top: 32px; background-color: var(--Mavi);">
+    <div class="col-lg-4 d-flex themed-grid-col" style="margin-bottom:12px">
+        <input class="DateYuks" type="date" style="width: 100%; padding-left: 16px;" form="modelForm2_{{Model.ModelID}}" name="ModelTarih2_{{Model.ModelID}}" value="{{Model.YayinTarihi}}" value required>
+    </div>
+    <div class="col-lg-4 d-flex themed-grid-col" style="margin-bottom:12px">
+        <select class="TextYuks" id="ModelCins" name="ModelCins2_{{Model.ModelID}}" form="modelForm2_{{Model.ModelID}}" style="width: 100%; padding-left: 16px;">
+            <option value="MODEL" {% if Model.ModelCins.strip() == 'MODEL' %}selected{% endif %}>ÖRGÜ MODELİ (Aylık Periyod)</option>
+            <option value="EXTRA" {% if Model.ModelCins.strip() == 'EXTRA' %}selected{% endif %}>ÖRGÜ MODELİ (Extra Modeller)</option>
+            <option value="ONLINE" {% if Model.ModelCins.strip() == 'ONLINE' %}selected{% endif %}>ONLINE SATIS URUNLERI</option>
+        </select>
+    </div>
+    <div class="col-lg-4 d-flex themed-grid-col" style="margin-bottom:12px">
+        <select class="TextYuks" id="GrubID" name="GrubID2_{{Model.ModelID}}" form="modelForm2_{{Model.ModelID}}" style="width: 100%; padding-left: 16px;">
+            {% for Group in Groups %}
+            <option value="{{Group.GrubID}}" {% if Group.GrubID == Model.GrubID %}selected{% endif %}>
+                {{Group.GrubID}} - {{Group.GrubAdi}}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-lg-8 " style="margin-bottom:12px">
+        <input class="TextYuks" style="width: 100%; padding: 16px;" placeholder="Modelin Adı" form="modelForm2_{{Model.ModelID}}" type="text" id="ModelAdi2" name="ModelAdi2_{{Model.ModelID}}" value="{{Model.ModelAdi.strip()}}" required maxlength="50" style="padding-left: 16px;">
+        <div class="LS-YAZI" style="margin-top:16px; width: 100%; color:black; font-family: 'Playwrite NZ'; ">
+            <div style="margin-bottom:16px">İçerik: {{Model.ResimSayisi}} Resim {{Model.VideoSayisi}} Video</div>
+            <div style="margin-bottom:16px">{{Model.VerilenPuanSayisi}} Değerleme'den ( {{Model.OrtPuan}} / 5 )</div>
+            <div style="margin-bottom:16px">Single Satış Sayısı: {{Model.SingleSatis}}-Adet</div>
+            <div style="margin-bottom:16px">Açık Üye Sayısı: {{Model.GorenUserSys}}-Adet</div>
+        </div>
+    </div>
+    <div class="col-lg-2" style="margin-bottom:12px">
+        <div class="FlexRow" style="width: 100%;">
+            <input class="TextYuks" style="text-align: center; width: 100%;" placeholder="Model Fiyatı" form="modelForm2_{{Model.ModelID}}" type="text" id="ModelFiyati2" name="ModelFiyati2_{{Model.ModelID}}" value="{{Model.Fiyati}}" required maxlength="5">
+        </div>
+        <div class="FlexRow" style="width: 100%;">
+            <img class="Resim SiyahResimGolgesi" style="width: 100%; height: auto; margin-top:16px; padding: 0; border:2px solid bllack;" src="data:image/jpeg;base64,{{ Model.Base64Pict }}" alt="Herkese Açık Resim">
+        </div>
+    </div>
+    <div class="col-lg-2 d-flex" style="margin-bottom:12px">
+        <div class="FlexColumn" style="text-align: center; align-items: start; justify-content: start;">
+            <form style="width: 100%; margin-bottom:16px;" action="/ModelDegistir/{{Model.ModelID}}" id="modelForm2_{{Model.ModelID}}" method="POST">
+                <button class="IndexSubmit" style="background-color: rgb(176, 176, 253); color:black;" type="submit" form="modelForm2_{{Model.ModelID}}">Değiştir</button>
+            </form>
+            {% if Model.ResimSayisi==0 and Model.VideoSayisi==0 %}
+            <form style="width: 100%; margin-bottom:16px" action="/ModelSilme/{{Model.ModelID}}" method="POST">
+                <button class="IndexSubmit" style="width: 100%; background-color: red; " type="submit">Silme</button>
+            </form>
+            {% endif %}
+            <form style="width: 100%; margin-bottom:16px" action="/ModelDetay/{{Model.ModelID}}" method="POST" style="margin-bottom: 4px; width: 100%;">
+                <button class="IndexSubmit" style="width: 100%; background-color: rgb(134, 248, 187); color: black;" type="submit">İçerikler</button>
+            </form>
+            {% if Model.YayinDurumu==0 and Model.ResimSayisi > 0 %}
+            <form style="width: 100%; margin-bottom:16px" action="/ModelYayinaGonder/{{Model.ModelID}}" method="POST" style="margin-bottom: 4px;">
+                <button class="IndexSubmit" style="width: 100%; background-color: yellow; color:black " type="submit">Yayına Gönder</button>
+            </form>
+            {% endif %}
+            {% if Model.YayinDurumu==1 %}
+            <form style="width: 100%; margin-bottom:16px" action="/ModelYayindanCek/{{Model.ModelID}}" method="POST" style="margin-bottom: 4px;">
+                <button class="IndexSubmit" style="width: 100%; background-color: rgb(255, 167, 214); color:black" type="submit">Yayından Geri Çek</button>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
+
+{% block ExtraScript %}
+<script>
+    function updateHiddenInput ()
+    {
+        // Seçilen değer
+        var selectedValue = document.getElementById( 'GrubID' ).value;
+
+        // Gizli input alanını güncelle
+        document.getElementById( 'GrubIDInput' ).value = selectedValue;
+    }
+
+    // Sayfa yüklendiğinde gizli input alanını doğru değeri gösterecek şekilde ayarlama
+    document.addEventListener( 'DOMContentLoaded', function ()
+    {
+        updateHiddenInput();
+    } );
+</script>
+{% endblock %}

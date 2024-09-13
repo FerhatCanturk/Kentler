@@ -1,0 +1,26 @@
+{% extends 'Base.html' %}
+{% block Baslik %} Üye Giriş Uyarısı {% endblock %}
+{% block ExtraStyles %} {% endblock %}
+{% block AdminNavigasyon %} {% endblock %}
+{% block UserNavigasyon %} {% endblock %}
+{% block SolAltAciklama %} {% endblock %}
+{% block SmallTopIcerik %} <div style="color:yellow"> ÜYE GİRİŞİ UYARISI </div>{% endblock %}
+{% block Icerikler %}
+<form action="/BtnIndexUyeUyariHTML">
+    <div class="TextBeyazGolge">
+        <div class="AnaBasliklar TextSiyahGolge SiyahResimGolgesi Border" style="font-size:1rem; height: 70px; width: 100%;"><strong>ÜYELİĞİNİZ TEK BİR CİHAZ İÇİN TANIMLANMAKTADIR</strong></div>
+        <div class="w3-center w3-hide-small w3-animate-zoom"> <img style="height: 50vh; max-width: 90vw;" src="/static/images/Dikkat.png" alt="Dikkat" /></div>
+        <p class="AnaBasliklar TextSiyahGolge SiyahResimGolgesi Border" style="font-size:1rem; height: 70px; width: 100%;"><strong>FARKLI BİR CİHAZLA GİRİŞİNİZDE BLOKE EDİLİRSİNİZ</strong></p>
+    </div>
+    <div class="w3-center" style="margin-top: 32px;">
+        <button class="w3-hover-black SiyahResimGolgesi Border" 
+        style="width: 100%; font-size:24px; height: auto; background-color: red; color:white; padding: 16px; ">
+            <i class="fa fa-check fa-3x"></i>
+            <strong>
+                <div>Kullanım Şartlarınızı Anladım</div>
+                <div>Giriş Yapmak İstiyorum</div>
+            </strong>
+        </button>
+    </div>
+</form>
+{% endblock %}

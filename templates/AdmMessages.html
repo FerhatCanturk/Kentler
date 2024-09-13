@@ -1,0 +1,90 @@
+
+{% extends 'Base.html' %}
+{% block Baslik %} Mesajlarımız {% endblock %}
+{% block ExtraStyles %}
+<style>
+    .SRG{width: 100%;height: auto; display: flex; flex-wrap: wrap; 
+        margin: 0; padding: 8px; gap:0px; 
+        border: 1px solid black; background-color: var(--Mavi);}
+    .FormStyle{width: 100%; max-width: 100%; min-width: 100%;  display: flex; flex-wrap: wrap; margin:0; height: auto;}
+    .Mesaj1 {width: 15%; max-width: 15%; min-width: 15%; margin: 0; padding-top: 32px; padding-bottom: 32px; text-align: left; height: auto;}
+    .Mesaj2 {width: 100%; color:black; text-align: left;height: auto;}
+
+    .Mesaj3 {width: 25%; max-width: 25%; min-width: 20%; margin: 0; padding-top: 32px; padding-bottom: 32px; text-align: left; height: auto;}
+    .Mesaj4 {width: 100%; color:black; text-align: left;height: auto;}
+</style>
+{% endblock %}
+{% block UyeGirisMenusuBlock %} {% endblock %}
+{% block SolUst %} {% endblock %}
+
+{% block UserNavigasyon %} {% endblock %}
+{% block ExtraNavigasyon %}{% endblock %}
+{% block SolAlt %} {% endblock %}
+{% block SmallScreenRightHeader %} {% endblock %}
+{% block Icerikler %}
+<div class="row" style="width: 100%;">
+    <div class="AnaBasliklar SiyahResimGolgesi " style="margin-bottom: 32px;">MESAJLARINIZ</div>
+    {% for Message in Messages %}
+    <div class="SiyahResimGolgesi SRG" style="height: auto; margin-bottom:32px; border-radius: 16px;">
+        <form class="FormStyle" id="Mesaj{{Message.MessageID}}" action="/MesajCevap/{{Message.MessageID}}" method="POST">
+            <!-- Model Adı -->
+            <div class="col Mesaj1">
+                <div class="Mesaj2">
+                    <h6>Gönderenin Adı Soyadı</h6>
+                    <h6>Gönderenin MailAdresi</h6>
+                    <h6>Mesajın Tarihi</h6>
+                    <h6>Mesajın Konusu</h6>
+                </div>
+            </div>
+            <div class="col Mesaj1">
+                <div class="Mesaj2">
+                    <h6>: {{Message.AdSoyad}}</h6>
+                    <h6>: {{Message.MailAdres[:15]}}...</h6>
+                    <h6>: {{Message.MessageTarih.strftime("%d-%m-%Y")}}</h6>
+                    <h6>: {{Message.Konu}}</h6>
+                </div>
+            </div>
+
+            <div class="col Mesaj3" style="border-right: 1px solid black;">
+                <div class="Mesaj4">
+                    <h6 style="color: black; padding-right: 16px; text-align: right;">{{Message.Icerik}}</h6>
+                </div>
+            </div>
+
+            {% if Message.CevapDurum == 0 %}
+            <div class="col Mesaj3">
+                <div class="Mesaj4" style="padding-left: 16px;"><textarea rows="5" name="Cevap" maxlength="1000"></textarea></div>
+            </div>
+
+            <div class="col Mesaj1" style="padding-left: 16px;">
+                <button form="Mesaj{{Message.MessageID}}" style="background-color: darkgreen; color: black; height: 50px; text-align: center;" class="Mesaj2" type="submit">Cevap Gönderin</button>
+            </div>
+            {% else %}
+
+            <div class="col Mesaj1">
+                <div class="row">
+                    <div class="Mesaj2">
+                        <h6 style="color:black; padding-left: 16px;">Cevap/Yanıtlama Tarihi</h6>
+                    </div>
+                    <div class="Mesaj2">
+                        <h6 style="color:black; padding-left: 16px;">{{Message.CevapTarih.strftime("%d-%m-%Y")}}</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col Mesaj3">
+                <div class="Mesaj4"><div class="Mesaj2">
+                        <h6 style="color:black; padding-left: 16px;">Verilen Cevap İçeriğiniz</h6>
+                    </div>
+                    <div class="Mesaj2">
+                        <h6 style="color:black; padding-left: 16px;">{{Message.Cevap.strip()}}</h6>
+                    </div>
+                </div>
+            </div>
+
+            {% endif %}
+        </form>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

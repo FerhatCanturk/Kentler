@@ -1,0 +1,160 @@
+{% extends 'Base.html' %}
+{% block Baslik %} Ana Sayfa {% endblock %}
+{% block ExtraStyles %} {% endblock %}
+{% block AdminNavigasyon %} {% endblock %}
+{% block UserNavigasyon %} {% endblock %}
+{% block SolAltAciklama %} {% endblock %}
+{% block SmallTopIcerik %}
+WEB SAYFAMIZA HOŞ GELDİNİZ
+{% endblock %}
+{% block Icerikler %}
+{% if WS %}
+<!-- ANIMASYON LOGOSU -->
+<!-- ANIMASYON LOGOSU -->
+<!-- ANIMASYON LOGOSU -->
+<div class="row text-center">
+    <div class="col-12">
+        <h1>{{CK}}</h1>
+        <img class="w3-animate-zoom" style="width: 75%;" src="/static/images/AdminSiyahLogo.png" alt="Logo">
+    </div>
+    <div class="col-12 BeyazTextGolgesi AnaBasliklar" style="font-size: 64px; margin-bottom: 64px; color: darkblue; background-color: transparent; border: none;"><strong>{{WS[0]['Sutun03']}}</strong></div>
+</div>
+<!-- RASTGELE İÇERİKLER -->
+<!-- RASTGELE İÇERİKLER -->
+<!-- RASTGELE İÇERİKLER -->
+{% if RST %}
+<div class="AnaBasliklar SiyahResimGolgesi Border">Modellerimizden Örnekler</div>
+<div class="row text-center" style="width: 100%; padding: 0; margin:0; margin-top: 32px; margin-bottom: 32px;">
+    {% for RS in RST %}
+    <div class="col-lg-4 d-flex themed-grid-col" style="padding: 16px;">
+        <div class="SiyahResimGolgesi FlexColumn Border" style="height: 100%; width: 100%; padding: 32px; background-color: var(--Mavi);">
+            <img style="height: auto; width: 100%;" src="data:image/jpeg;base64,{{ RS.Base64Pict }}" alt="Image">
+            <div class="Aciklama" style="margin-top: auto">
+                <div style="margin-top: 16px;"><strong>{{RS.ModelAdi}} </strong></div>
+                <div>Yayın Tarihi: {{ RS.YayinTarihi.strftime("%d-%m-%Y")}}</div>
+                <div>Model İçeriği</div>
+                <div>{{ RS.ResimSayisi }}-Resim & {{ RS.VideoSayisi }}-Video</div>
+                <div>Üye Değerleme Sonucu</div>
+                <div>{{ RS.VerilenPuanSayisi }}-Adet ({{ RS.OrtPuan }}/5)</div>
+                <div>Single Proje Fiyatı: {{ RS.Fiyati }}-TL</div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+<!-- HAKKIMIZDA İÇERİKLERİ -->
+<!-- HAKKIMIZDA İÇERİKLERİ -->
+<!-- HAKKIMIZDA İÇERİKLERİ -->
+<div class="AnaBasliklar SiyahResimGolgesi Border">Hakkımızda</div>
+<div class="SiyahResimGolgesi HakkimizdaAciklama text-center Border">
+    <div style="padding: 32px;">{{WS[0]['Sutun04']}}</div>
+    <div style="padding: 32px;">{{WS[0]['Sutun05']}}</div>
+    <div style="padding: 32px;">{{WS[0]['Sutun06']}}</div>
+    <div style="padding: 32px;">{{WS[0]['Sutun07']}}</div>
+</div>
+<!-- TOPLAM MODEL, VIDEO, RESIM SAYILARI -->
+<!-- TOPLAM MODEL, VIDEO, RESIM SAYILARI -->
+<!-- TOPLAM MODEL, VIDEO, RESIM SAYILARI -->
+<div class="row text-center" style="background-color: transparent; width: 100%; padding: 0; margin:0; margin-top: 32px; margin-bottom: 32px;">
+    <div class="col-sm-4 d-flex themed-grid-col">
+        <div class="SiyahResimGolgesi FlexColumn Border" style="height: 100%; padding: 32px; background-color: var(--Mavi);">
+            <i class="fa fa-american-sign-language-interpreting fa-3x"></i>
+            <div class="Aciklama" style="margin-top: auto">
+                <div>Toplam Model Sayısı</div>
+                <div style="font-size: 150%;" id="ModelSayisi">{{TM[0]['MS']}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4 d-flex themed-grid-col">
+        <div class="SiyahResimGolgesi FlexColumn Border" style="height: 100%; padding: 32px; background-color: var(--Mavi);">
+            <i class="fa fa-video-camera fa-3x"></i>
+            <div class="Aciklama" style="margin-top: auto">
+                <div>Toplam Video Sayısı</div>
+                <div style="font-size: 150%;">{{TM[0]['VS']}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4 d-flex themed-grid-col">
+        <div class="SiyahResimGolgesi FlexColumn Border" style="height: 100%; padding: 32px; background-color: var(--Mavi);">
+            <i class="fa fa-camera fa-3x"></i>
+            <div class="Aciklama" style="margin-top: auto">
+
+                <div>Toplam Resim Sayısı</div>
+                <div style="font-size: 150%;">{{TM[0]['RS']}}</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- SON MODELIMIZ -->
+<!-- SON MODELIMIZ -->
+<!-- SON MODELIMIZ -->
+{% if SP %}
+<div class="AnaBasliklar SiyahResimGolgesi Border">Son Çıkan Örgü Modelimiz</div>
+<div class="row text-center" style="background-color: transparent; width: 100%; padding: 0; margin:0; margin-top: 32px; margin-bottom: 32px;">
+    <div class="col-lg-4 d-flex themed-grid-col" style="padding: 16px;">
+        <div class="SiyahResimGolgesi FlexColumn Border" style="height: 100%; width: 100%; padding: 32px; background-color: var(--Mavi);">
+            <img style="height: auto; width: 100%;" src="data:image/jpeg;base64,{{ SP[0]['Base64Pict'] }}" alt="Image">
+        </div>
+    </div>
+    <div class="col-lg-8 d-flex themed-grid-col" style="padding: 16px;">
+        <div class="SiyahResimGolgesi FlexColumn Border" style="width: 100%; border-radius: 16px; padding: 32px; background-color:rgba(183,225,228,0.75); ">
+            <div>Son Çıkan </div>
+            <div><strong style="font-size: 150%;">{{SP[0]["ModelAdi"]}}</strong></div>
+            <div>Modelimiz {{SP[0]["YayinTarihi"].strftime("%d-%m-%Y")}} Tarihinde Beğeninize Sunulmuştur.</div>
+            <div style="margin-top:32px;">Modelimiz Toplamda </div>
+            <div>{{SP[0]["PictSys"]}}-Adet Resim ve {{SP[0]["VideoSys"]}}-Adet Video'dan Oluşmaktadır.</div>
+            <div style="margin-top:32px;">Modelimiz İçin Üyelerimiz {{SP[0]["VerilenPuanSayisi"]}}-Adet Değerlendirme Yapmıştır.</div>
+            <div>Bu Değerlemelerin Ortalaması Tam Not 5 Üzerinden {{SP[0]["OrtPuan"]}}'dir.</div>
+            <div style="margin-top:32px;">Bu Modelimize İsterseniz SATIŞLAR Sayfamızdan {{SP[0]["Fiyati"]}}-TL Karşılığında Sahip Olabilirsiniz.</div>
+            <div style="margin-top:32px;">Tanıtım Videomuzu</div>
+            <a href="/SonModelVideoGoster/{{SP[0]['ModelID']}}" type="submit" methot="POST"><i class="fa fa-video-camera fa-5x ParlayanButon"></i></a>
+            <div>Seyredebilirsiniz</div>
+        </div>
+    </div>
+</div>
+{% endif %}
+<!-- ABONELIK PAKETLERIMIZ -->
+<!-- ABONELIK PAKETLERIMIZ -->
+<!-- ABONELIK PAKETLERIMIZ -->
+{% if APK %}
+<div class="AnaBasliklar SiyahResimGolgesi Border">Abonelik Paketlerimiz</div>
+<div class="row text-center" style="background-color: transparent; width: 100%; padding: 0; margin:0;  margin-top: 32px; margin-bottom: 32px;">
+    {% for AP in APK %}
+    <div class="col-lg-4 sm-12 d-flex themed-grid-col">
+        <div class="SiyahResimGolgesi FlexColumn Border" style="height:100%; width:100%; padding:32px; background-color: var(--Mavi);">
+            <div><strong>{{AP.PaketAdi}}</strong></div>
+            <div>{{AP.Sutun1}}</div>
+            <div>{{AP.Sutun2}}</div>
+            <div>{{AP.Sutun3}}</div>
+            <div>{{AP.Sutun4}}</div>
+            <div><strong>{{AP.SutunFiyat}}</strong></div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+<!-- MESAJ BOLUMU -->
+<!-- MESAJ BOLUMU -->
+<!-- MESAJ BOLUMU -->
+<div class="AnaBasliklar SiyahResimGolgesi Border">Bize Mesaj Gönderin</div>
+<form action="/BtnMesajGonder" method="POST" style="margin-top: 32px;">
+    <div class="row text-center FlexRow" style="width: 100%; margin: 8px;">
+        <div class="col-lg-10 sm-12 d-flex FlexColumn">
+            <input type="text" name="AdSoyad" class="SiyahResimGolgesi TextYuks" style="width: 100%; padding-left: 16px; margin:16px" placeholder="Adınız Soyadınız..." maxlength="50" required>
+            <input type="email" name="MailAdres" class="SiyahResimGolgesi TextYuks" style="width: 100%; padding-left: 16px; margin:16px" placeholder="Mail Adresiniz..." maxlength="50" required>
+            <input type="text" name="MesajKonusu" class="SiyahResimGolgesi TextYuks" style="width: 100%; padding-left: 16px; margin:16px" placeholder="Mesajınızın Konusu..." maxlength="50" required>
+            <textarea name="MesajIcerik" class="SiyahResimGolgesi" rows="8" style="width: 100%; padding-left: 16px; margin:16px; border-radius: 16px;" rows="10" placeholder="Mesajınızı Yazınız..." maxlength="500" required></textarea>
+            <button type="submit" class="SiyahResimGolgesi IndexSubmit" style="margin:16px">
+                <i class="fa fa-paper-plane-o fa-3x" style="margin-right: 32px;"></i>
+                <span class="ms-2">Mesajınızı Gönderiniz</span>
+                <i class="fa fa-paper-plane-o fa-3x" style="margin-left: 32px; transform: rotate(180deg);"></i>
+            </button>
+        </div>
+    </div>
+</form>
+<!-- WSSABIT KAPANISI -->
+{% endif %}
+{% endblock %}
+{% block Script %}
+{% endblock %}

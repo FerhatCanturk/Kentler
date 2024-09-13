@@ -1,0 +1,147 @@
+{% extends 'Base.html' %}
+{% block Baslik %} Atölye İşlemleri {% endblock %}
+{% block ExtraStyles %}
+<style>
+    .collapsible {
+        color: white;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 24px;
+    }
+
+    .GizliIcerikler {
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: var(--Mavi);
+        margin-bottom: 32px;
+        color: black
+    }
+</style>
+{% endblock %}
+{% block UserNavigasyon %} {% endblock %}
+{% block SolAltAciklama %} {% endblock %}
+{% block BizKimiz %} {% endblock %}
+{% block SmallTopIcerik %} {% endblock %}
+{% block Icerikler %}
+
+<form action="/YeniAtolyeKaydi" method="POST">
+    <div class="SiyahResimGolgesi Border" style="padding: 16px; border-radius: 16px; text-align: center; height: auto; background-color: var(--Mavi); margin-bottom:100px">
+        <div class="row text-center" style="width: 100%; padding: 0; margin:0;  margin-top: 32px; margin-bottom: 32px;">
+            <h1 style="color:black;"><strong>Yeni Atölye Tanımı</strong></h1><br>
+            <div class="col-xl-4 col-sm12  d-flex themed-grid-col">
+                <input type="text" name="AtolyeAck" class="TextYuks" style="width: 100%; color:black; background-color: white; margin-bottom: 32px; padding-left: 16px;" placeholder="Atölye Açıklaması" maxlength="50" required>
+            </div>
+            <div class="col-xl-4 col-sm12  d-flex themed-grid-col">
+                <input type="date" name="Acilis" class="DateYuks" style="width: 100%; color:black; background-color: white; margin-bottom:32px; padding-left: 16px;" placeholder="Açılış Zamanı" value="2024-01-01" required>
+            </div>
+            <div class="col-xl-4 col-sm12  d-flex themed-grid-col">
+                <input type="date" name="Kapanis" class="DateYuks" style="width: 100%; color:black; background-color: white; margin-bottom:32px; padding-left: 16px;" placeholder="Kananış Zamanı" value="2024-01-01" required>
+            </div>
+            <div class="col-xl-12 col-sm12 d-flex themed-grid-col">
+                <input type="text" class="TextYuks" name="Aciklama" style="width: 100%;color:black; background-color: white; margin-bottom:32px; padding-left: 16px;" placeholder="Açıklama" maxlength="50">
+            </div>
+            <div class="col-xl-4 col-sm12 FlexColumn" style="width: 100%;">
+                <p><input type="submit" value="Yeni Atölye Kaydet" class="IndexSubmit" style="width: 100%;"></p>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% for ATLY in Atolyeler %}
+<div class="SiyahResimGolgesi" style="width: 100%; height: auto; margin: 0; padding: 0; background-color: var(--Mavi); border-radius: 64px;">
+    <button type="button" class="collapsible SiyahResimGolgesi" style="border-top-left-radius: 16px; border-top-right-radius: 16px; background-color: {% if ATLY.UyeSys == 0 %} darkblue {% else %} darkgreen {% endif %};">
+        <div class="row text-center FlexRow">
+            <div class="col-xl-6 col-sm6" style="text-align: left; align-items: left; justify-content: left;">
+                {{ ATLY.AtolyeAck.upper() }}
+            </div>
+            <div class="col-xl-6 col-sm6" style="text-align: right; align-items: right; justify-content: right;">
+                <img src="/static/images/AdminSiyahLogo.png" height="50px">
+            </div>
+
+        </div>
+    </button>
+    <div class="GizliIcerikler Border" style="border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; padding-top: 32px;">
+        <div class="row text-center" style="background-color: transparent; width: 100%; padding: 0; margin:0;  margin-top: 32px; margin-bottom: 32px; ">
+            <div class="col-xl-4 col-sm12 FlexColumn">
+                <div>Atölye Açıklaması: {{ATLY.GenelAck}}</div>
+                <div>Açılış Zamanı: {{ATLY.Acilis.strftime("%d-%m-%Y")}}</div>
+                <div>Kapanış Zamanı: {{ATLY.Kapanis.strftime("%d-%m-%Y")}}</div>
+                <div>Üye Sayısı: {{ATLY.UyeSys}}-Kişi</div>
+                {% if ATLY.UyeSys==0 %}
+                <form action="/AtolyeSilme/{{ATLY.AtolyeID}}" method="post" style="width: 40%;">
+                    <button class="IndexSubmit" style="margin-top:32px; margin-bottom:16px; width: 100%;" type="submit">
+                        Atölyeyi Sil
+                    </button>
+                </form>
+                {% endif %}
+            </div>
+
+            {% if ATLY.Durum == 1 %}
+            <form class="col-xl-4 col-sm12 FlexColumn" action="/AtolyeyeEkleme" method="post">
+                <input type="hidden" name="AtolyeID" value="{{ATLY.AtolyeID}}">
+                <select id="UserSelect" name="UserID" class="DateYuks" style="padding-left: 16px; width: 100%; margin-bottom: 16px;">
+                    {% for User in Users %}
+                    {% if User.AtolyeID == 0 %}
+                    <option value="{{User.UserID}}">{{User.UserAdiSoyadi}}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+                <button class="IndexSubmit" style="width:100%;">
+                    Üyeyi Atölyeye Ekle
+                </button>
+            </form>
+            {% endif %}
+        </div>
+        <div class="row text-center " style="margin-bottom: 32px;">
+            {% for User in Users %}
+            {% if User.AtolyeID == ATLY.AtolyeID %}
+            <a class="col-xl-3 d-flex themed-grid-col FlexRow" style="margin-bottom: 16px;" href="/AtolyedenCikart/{{ATLY.AtolyeID}}/{{User.UserID}}" method="POST">
+                <div style="height: auto; width: 100%;">
+                    <button type="submit" class="IndexSubmit">
+                        <div>{{User.UserAdiSoyadi}}</div>
+                        <div>Atölye'den Çıkart</div>
+                    </button>
+                </div>
+            </a>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
+{% block ExtraScript %}
+<script>
+    var coll = document.getElementsByClassName( "collapsible" );
+    for ( var i = 0; i < coll.length; i++ )
+    {
+        coll[ i ].addEventListener( "click", function ()
+        {
+            var content = document.getElementsByClassName( "GizliIcerikler" );
+            for ( var j = 0; j < content.length; j++ )
+            {
+                if ( content[ j ] != this.nextElementSibling )
+                {
+                    content[ j ].style.display = "none";
+                    coll[ j ].classList.remove( "active" );
+                }
+            }
+            this.classList.toggle( "active" );
+            var thisContent = this.nextElementSibling;
+            if ( thisContent.style.display === "block" )
+            {
+                thisContent.style.display = "none";
+            } else
+            {
+                thisContent.style.display = "block";
+            }
+        }
+        );
+    }
+</script>
+{% endblock %}

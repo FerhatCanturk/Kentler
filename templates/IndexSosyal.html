@@ -1,0 +1,37 @@
+{% extends 'Base.html' %}
+
+{% block Baslik %} Sosyal Etkinliklerimiz {% endblock %}
+{% block ExtraStyles %}
+
+{% endblock %}
+
+{% block SolUst %}{% endblock %}
+{% block AdminNavigasyon %}{% endblock %}
+{% block UserNavigasyon %}{% endblock %}
+{% block ExtraNavigasyon %}{% endblock %}
+{% block SolAltAciklama %} {% endblock %}
+{% block SmallScreenRightHeader %}
+<div style="font-size: 16px; color:yellow">SOSYAL ETKİNLİKLERİMİZ</div>
+{% endblock %}
+
+{% block Icerikler %}
+<div class="AnaBasliklar SiyahResimGolgesi Border" style="margin-bottom:64px; height: auto;">
+    SOSYAL ETKİNLİKLERİMİZ
+</div>
+{% for Social in Socials %}
+<div class="SiyahResimGolgesi Border" style="width: 100%; background-color: var(--Mavi); margin-bottom: 64px;">
+    <div class="row" style="width: 100%;">
+        <div class="col" style="width: 35%; max-width: 35%; padding: 32px;">
+            <img src="data:image/jpeg;base64,{{ Social.Base64Pict }}" alt="{{Social.Baslik}}" class="SiyahResimGolgesi Border" style="height: auto; width: 100%; max-width: 100%;">
+        </div>
+        <div class="col" style="width: 75%; padding: 16px;">
+            <h1>{{Social.Baslik}}</h1>
+            <div style="font-size:24px"> {{ Social.Aciklama }}</div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endfor %}
+{% endblock %}
