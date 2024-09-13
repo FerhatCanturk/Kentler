@@ -2,6 +2,22 @@ import SQLServer
 
 def Sabitler():
     SiteSabitleri = SQLServer.Sorgula("SELECT * FROM SKWebSabitler")
+    if not SiteSabitleri:
+        # Return a dictionary with default values if no records are found
+        return {
+            'SiteSahibi': '',
+            'Unvan': '',
+            'Slogan': '',
+            'AdminMail': '',
+            'Adres': '',
+            'Telefon': '',
+            'BankaSube': '',
+            'IBANNo': '',
+            'PassWord': '',
+            'SmtpHost': '',
+            'Port': '',
+            'MsgSys': ''
+        }
     Sabitler={
     'SiteSahibi': SiteSabitleri[0].get("Sutun01", "").strip(),
     'Unvan':      SiteSabitleri[0].get("Sutun02","").strip(),
