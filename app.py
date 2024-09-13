@@ -2,7 +2,7 @@
 import time, os, SQLServer, SiteSabit
 from flask import Flask, session
 ###############################################################################################################    
-from views                                import Index
+from views.pyIndex                        import Index
 from views.pyIndexKK                      import IndexKK
 from views.pyIndexSosyal                  import IndexSosyal
 from views.pyIndexSatis                   import IndexSatis
