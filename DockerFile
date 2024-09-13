@@ -16,6 +16,11 @@ RUN echo "deb [arch=amd64] https://packages.microsoft.com/debian/11/prod bullsey
 RUN apt-get update && \
     ACCEPT_EULA=Y apt-get install -y msodbcsql17
 
+# ODBC Driver 17 için yapılandırma dosyasını oluşturun
+RUN echo "[ODBC Driver 17 for SQL Server]" > /etc/odbcinst.ini && \
+    echo "Description=Microsoft ODBC Driver 17 for SQL Server" >> /etc/odbcinst.ini && \
+    echo "Driver=/opt/microsoft/msodbcsql17/lib64/libmsodbcsql-17.10.so.1.1" >> /etc/odbcinst.ini
+
 # Çalışma dizinini ayarla
 WORKDIR /app
 
