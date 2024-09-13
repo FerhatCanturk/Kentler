@@ -16,7 +16,7 @@ def GirisSayfasi():
 ##############################################################################################################
 @Index.route("/IndexSayfasi")
 def AnaSayfa():
-    try:
+    #try:
         SessKontrol = SessionKontrolleri.IndexSessionKontrolu("")
         if SessKontrol:
             current_app.config['Mesaj']    = "pyIndex-001"
@@ -36,9 +36,9 @@ def AnaSayfa():
         
         CK = str(session.get("LocalStorage"))
         return render_template('Index.html', SiteOwner = SiteOwner, TM = TMRSVS, RST = RS, SP = SP, APK = AP, WS = WS, CK = CK)
-    except Exception as e:
-        current_app.config['Mesaj']    = "pyIndex-099"
-        return redirect("/SanalError")     
+    #except Exception as e:
+        #current_app.config['Mesaj']    = "pyIndex-099"
+        #return redirect("/SanalError")     
 ##############################################################################################################
 @Index.route('/BtnMesajGonder', methods=["POST"])
 def MesajGonder():
