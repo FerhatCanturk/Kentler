@@ -1,20 +1,30 @@
-# Python 3.11 tabanlı bir görüntü kullanıyoruz
+# Temel imaj olarak Python 3.11 kullan
 FROM python:3.11
 
-# ODBC sürücüsü ve gerekli araçları yükleyin
+# Gerekli sistem paketlerini yükle
 RUN apt-get update && \
-    apt-get install -y \
-    curl \
-    gnupg \
-    && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-    && curl https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/prod.list > /etc/apt/sources.list.d/mssql-release.list \
-    && apt-get update \
-    && ACCEPT_EULA=Y apt-get install -y msodbcsql17
+    apt-get install -y unixodbc unixodbc-dev \
+                       curl gnupg apt-transport-https
 
-# Diğer bağımlılıkları ve uygulamayı yükleyin
-COPY . /app
+# Microsoft SQL Server ODBC sürücüsünü yüklemek için Microsoft'un GPG anahtarını ekleyin
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+
+# Microsoft SQL Server ODBC sürücüsünün deposunu ekleyin
+RUN echo "deb [arch=amd64] https://packages.microsoft.com/debian/11/prod bullseye main" | tee /etc/apt/sources.list.d/mssql-release.list
+
+# Paket listesini güncelleyin ve ODBC Driver 17'yi yükleyin
+RUN apt-get update && \
+    ACCEPT_EULA=Y apt-get install -y msodbcsql17
+
+# Çalışma dizinini ayarla
 WORKDIR /app
-RUN pip install -r requirements.txt
 
-# Uygulamanızı çalıştırın
-CMD ["gunicorn", "app:app"]
+# Gereksinimlerinizi yükleyin
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Uygulama dosyalarınızı kopyalayın
+COPY . .
+
+# Uygulamanızı çalıştırmak için gerekli komut
+CMD ["gunicorn", "-b", "0.0.0.0:8000", "app:app"]
